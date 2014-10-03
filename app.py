@@ -53,9 +53,37 @@ class Index(Handler):
     def get(self):        
         self.render("index.html") 
 
-class Categorias(Handler):
+class Maquillaje(Handler):
     def get(self):
-      self.render("categorias.html")
+      self.render("maquillaje.html")
+      
+class Maquillaje1(Handler):
+    def get(self):
+      self.render("maquillaje1.html")
+
+class Maquillaje2(Handler):
+    def get(self):
+      self.render("maquillaje2.html")
+
+class Maquillaje3(Handler):
+    def get(self):
+      self.render("maquillaje3.html")      
+
+class Lineadecolor(Handler):
+    def get(self):
+      self.render("lineadecolor.html")  
+
+class Labios(Handler):
+    def get(self):
+      self.render("labios.html")  
+
+class Ojos(Handler):
+    def get(self):
+      self.render("ojos.html")  
+
+class Mejillas(Handler):
+    def get(self):
+      self.render("mejillas.html")        
 
 class Reportes(Handler):
     def get(self):
@@ -67,7 +95,14 @@ class Salir(Handler):
     
 app = webapp2.WSGIApplication([('/', Login),
                                ('/index', Index),                               
-                               ('/categorias',Categorias),
+                               ('/maquillaje',Maquillaje),
+                               ('/maquillaje1',Maquillaje1),
+                               ('/maquillaje2',Maquillaje2),                               
+                               ('/maquillaje3',Maquillaje3),                               
+                               ('/lineadecolor',Lineadecolor),                                                              
+                               ('/labios',Labios),
+                               ('/ojos',Ojos),                                                                                                                                                                                          
+                               ('/mejillas',Mejillas),                                                                                             
                                ('/reportes',Reportes),
                                ('/salir',Salir)
                               ],
