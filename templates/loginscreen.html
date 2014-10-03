@@ -1,0 +1,27 @@
+{% set active_page = "loginscreen" %}
+<html lang="es">
+<head>
+	<title>Inicio de sesion</title>
+	<link rel="stylesheet" type="text/css" href="/static/estilo_login.css">
+</head>
+<script type="text/javascript">
+	$('#toggle-login').click(function(){
+	  $('#login').toggle();
+	});
+</script>
+<body>
+	<span href="#" class="button" id="toggle-login">Log in</span>	
+	<div id="login">
+		<div id="triangle"></div>
+	 	<h1>Log in</h1>
+	  	<form role="form" action="/" method="post">
+	    	<input type="text" name="user" placeholder="Usuario" />
+	    	<input type="password" name="password" placeholder="Password" />
+	    	<input type="submit" value="Log in" />
+	  	</form>
+	</div>
+	<div class="container">
+	  <p>{{ error }}</p>
+	</div>
+</body>
+</html>

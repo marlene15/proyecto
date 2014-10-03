@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		{%block title%}
+			Sitio creado con Google App Engine
+		{%endblock%} 
+	</title>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" type="text/css" href="/static/estilo.css">
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
+
+	<script src="/static/bootstrap/js/jquery.min.js"></script> <!--Se debe cargar primero el jquery antes de bootstrap para que todo funcione bien-->
+	<script src="/static/bootstrap/js/bootstrap.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.min.js"></script>	
+
+</head>
+<body>
+	<div class="container">	
+		<div id="cabecera_principal">
+			<img src="#"/>
+		</div>
+		<!-- <div id="header">
+			<h1><a href="#">Portafolio de evidencias</a></h1>
+			{% set navigation_bar = [
+				('/index', 'index', 'Inicio'),
+				('/categorias', 'categorias', 'Categorías'),
+				('/reportes', 'reportes', 'Reportes'),
+				('/salir', 'salir', 'Salir')
+				] 
+			-%}
+			{% set active_page = active_page|default('index') -%}
+			<ul id="navigation">
+				{%for href, id, caption in navigation_bar%}
+					<li {%if id == active_page%} class="active" {%endif%}>
+						<a href="{{href|e}}">{{caption|e}}</a>
+					</li>
+				{%endfor%}
+			</ul>					
+		</div>	 -->
+
+		<!-- Navbar -->
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+		  <div class="container">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="<?php echo site_url(); ?>">Horarios</a>
+		    </div>
+		    <div class="navbar-collapse collapse">
+		      <ul class="nav navbar-nav">
+
+		      	<li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Registrar <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="<?php echo site_url('controlador_inicio/especialidad'); ?>">Área de formación</a></li>
+		            <li><a href="<?php echo site_url('controlador_inicio/maestro'); ?>">Maestro</a></li>
+		            <li><a href="<?php echo site_url('controlador_inicio/materia'); ?>">Materia</a></li>
+		           </ul>
+		        </li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span> Editar <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="<?php echo site_url('controlador_inicio/edita_area'); ?>">Área de formación</a></li>
+		            <li><a href="<?php echo site_url('controlador_inicio/edita_maestro'); ?>">Maestro</a></li>
+		            <li><a href="<?php echo site_url('controlador_inicio/edita_materia'); ?>">Materia</a></li>                              
+		          </ul>
+		        </li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list-alt"></span> Asignar <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <!-- <li><a href="#">Area de formación-Materia</a></li> -->
+		            <li><a href="<?php echo site_url('controlador_asignar/maestro_materia'); ?>">Maestro-Materia</a></li>
+		            <li><a href="<?php echo site_url('controlador_asignar/materia_semestre'); ?>">Materia-Semestre</a></li>
+		            <li><a href="<?php echo site_url('controlador_asignar/escoger_periodo'); ?>">Horarios</a></li>
+		          </ul>
+		        </li>
+
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-remove"></span> Eliminar asignaciones <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="<?php echo site_url('controlador_inicio/edita_maestro_materia'); ?>">Maestro-Materia</a></li>
+		            <li><a href="<?php echo site_url('controlador_inicio/edita_materia_semestre'); ?>">Matria-Semestre</a></li>
+		          </ul>
+		        </li>
+
+		        <li><a href="<?php echo site_url('controlador_asignar/escoger_periodo_a_ver') ?>"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		      	<li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#">Datos</a></li>
+		            <li><a href="<?php echo site_url('login/logout'); ?>">Cerrar Sesión</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</div><!--Cierra navbar-->
+
+		<div id="bodycontent">
+			{%block bodycontent%}
+				Replace this
+			{%endblock%}
+		</div>	
+		<div id='footer'>
+			<p class="text_footer"><center>Marlene Alejandra Maciel Torres</center></p>
+			<p class="text_footer"><center>Ingeniería en Sistemas Computacionales</center></p>			
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,82 @@
+body {
+    font-family: arial, san-serif;
+    /*max-height: 1024px;*/
+}
+
+a
+{
+    color: blue;
+}
+
+#header h1 a {
+    text-decoration: none;
+    color: black;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 0;
+}
+
+#header {
+    background-color: #dde;
+    border-top: 3px solid #36c;
+    overflow:hidden;
+    padding: 7px;
+    margin-top: 5px;
+    height: 40px;
+}
+
+#header h1 {
+    font-size: 20px;
+    float: left;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0 0 0 .3em;
+}
+
+#header li {
+    font-size: 14px;
+    display: inline;
+    padding: .5em;
+}
+
+#header ul {
+    list-style: none;
+    text-align: right;
+    float:right;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+}
+
+#header li a.selected {
+    color: black;
+    text-decoration: none;
+}
+
+/*Contenido de la cabecera*/
+#cabecera_principal{
+    height: 189px;
+    background: #00A0B6;
+}
+
+/*Contenido del footer*/
+#footer{
+    height: 160px;
+    background: #00A0B6;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.text_footer{
+    margin-right: -150px;
+    margin-top: 5px;
+    font-size: 15px;
+    color: black;
+}
+
+/*Código para centrar los elementos de issuu*/
+.issuuembed{
+    margin: 0 auto;
+    text-align: center;
+}
