@@ -77,6 +77,14 @@ class Labios(Handler):
     def get(self):
       self.render("labios.html")  
 
+class Labial1(Handler):
+    def get(self):
+      self.render("labial1.html")  
+
+class Labial2(Handler):
+    def get(self):
+      self.render("labial2.html")  
+
 class Ojos(Handler):
     def get(self):
       self.render("ojos.html")  
@@ -101,6 +109,8 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/maquillaje3',Maquillaje3),                               
                                ('/lineadecolor',Lineadecolor),                                                              
                                ('/labios',Labios),
+                               ('/labial1',Labial1),
+                               ('/labial2',Labial2),                               
                                ('/ojos',Ojos),                                                                                                                                                                                          
                                ('/mejillas',Mejillas),                                                                                             
                                ('/reportes',Reportes),
