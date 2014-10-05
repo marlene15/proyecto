@@ -89,6 +89,26 @@ class Ojos(Handler):
     def get(self):
       self.render("ojos.html")  
 
+class Corrector(Handler):
+    def get(self):
+      self.render("corrector.html") 
+
+class Sombras(Handler):
+    def get(self):
+      self.render("sombras.html") 
+
+class Rimel(Handler):
+    def get(self):
+      self.render("rimel.html")              
+
+class Delineador(Handler):
+    def get(self):
+      self.render("delineador.html")
+
+class Lapiz(Handler):
+    def get(self):
+      self.render("lapiz.html")
+
 class Mejillas(Handler):
     def get(self):
       self.render("mejillas.html")        
@@ -111,7 +131,12 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/labios',Labios),
                                ('/labial1',Labial1),
                                ('/labial2',Labial2),                               
-                               ('/ojos',Ojos),                                                                                                                                                                                          
+                               ('/ojos',Ojos),
+                               ('/sombras',Sombras),
+                               ('/rimel',Rimel),
+                               ('/delineador',Delineador),
+                               ('/lapiz',Lapiz),
+                               ('/corrector',Corrector),                                                                                                                                                                                          
                                ('/mejillas',Mejillas),                                                                                             
                                ('/reportes',Reportes),
                                ('/salir',Salir)
