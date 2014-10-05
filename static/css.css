@@ -1,0 +1,121 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+/*Inicio Sesion*/
+.form-signin {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+	margin-bottom: 10px;
+}
+.form-signin .checkbox {
+	font-weight: normal;
+}
+.form-signin .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+.form-signin input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.contenedor
+{
+	float: left;
+	width: 980px;
+	padding: 10px;
+	min-height: 600px;
+	background: #BFCDDB;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px;
+	margin-bottom: 50px;
+}
+.principal
+{
+	margin: 0 auto 0 auto;
+	width: 1000px;
+	padding-top: 20px;
+}
+
+.table th
+{
+	text-align: center;   
+}
+
+.form-group{
+	border: 1px solid #F1F1F1;
+	border-radius: 5px;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+}
+
+#tabla_horario{
+	/*border: 1px solid black;*/
+	position: relative;
+}
+
+#dias div{
+	margin: 0px;
+	padding: 10px;
+	float: left;
+	/*width: 12.3%;*/
+	width: 17.3%;
+	background: #F8F8F8;
+	border: 1px solid black;
+	text-align: center;
+}
+#horas{
+	clear: left;
+	float: left;
+	width: 12%;
+	margin: 1px;
+}
+#horas div{
+	margin: 0px;
+	padding: 10px;
+	text-align: center;
+	/*float: left;*/
+	/*width: 12.3%;*/
+	background: #F8F8F8;
+	border: 1px solid black;
+}
+
+#horario{
+	/*width: 87.5%;*/
+	width: 87.5%;
+	float: right;
+	/*clear: both;*/
+	/*margin:0 auto;*/
+}
+#horario div {
+	border: 1px solid black;
+	margin: 0px;
+	padding: 10px;
+	float: left;
+	width: 19.7%;
+	background: #F8F8F8;
+}

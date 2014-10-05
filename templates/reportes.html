@@ -1,7 +1,83 @@
 {% extends "_base.html" %} <!--Hereda el contenido del _base.html-->
-{% set active_page = "perfil" %}
+{% set active_page = "reportes" %}  
+
 {% block bodycontent %} <!--Inicio del contenido del archivo-->
-      <h2>Mi perfil</h2>
-      <p>
-      </p>
+    <h2><center>Reportes</center></h2>     	
+  	<div class="form-group">	
+      	<form role="form">      	
+			<label for="nivel">Seleccionar reporte: </label>
+			<select class="form-control" name="nivel">
+			  <option>Catálogo de artículos</option>
+			  <option>Artículos vendidos</option>
+			  <option>Entradas, salida, ajustes y devoluciones de unidades</option>
+			  <option>Reportes por cliente</option>
+			  <option>Listado de ganancias</option>
+			</select>
+			<br/>
+			<label for="nivel">Selecciona categoría: </label>
+			<select class="form-control" name="nivel">
+			  <option>Maquillaje</option>
+			  <option>Línea de color</option>
+			</select>
+			<br/>
+			<label for="fecha">Fecha de inicio: </label>
+			<div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+				<input class="form-control" size="16" type="text" readonly name="fecha_inicio">
+			  	<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+			<br/>
+			<label for="fecha">Fecha de fin: </label>
+			<div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+				<input class="form-control" size="16" type="text" readonly name="fecha_inicio">
+			  	<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			</div>
+			<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Generar"><span class='glyphicon glyphicon-file'></span></button>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'"><span class='glyphicon glyphicon-remove-circle'></span></button>
+			</div>
+		</form> 
+  	</div>   
 {% endblock %} <!--Fin del contenido del archivo-->
+
+{%block script%}
+	<!--Para poder usar el calendario-->
+	<script type="text/javascript" src="static/calendar/jquery-1.8.3.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="static/calendar/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="static/calendar/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>	
+
+	<script type="text/javascript">
+	    $('.form_datetime').datetimepicker({
+	      language:  'es',
+	      weekStart: 1,
+	      todayBtn:  1,
+	      autoclose: 1,
+	      todayHighlight: 1,
+	      startView: 2,
+	      forceParse: 0,
+	      showMeridian: 1
+	    });
+	  $('.form_date').datetimepicker({
+	      language:  'es',
+	      weekStart: 1,
+	      todayBtn:  1,
+	      autoclose: 1,
+	      todayHighlight: 1,
+	      startView: 2,
+	      minView: 2,
+	      forceParse: 0
+	    });
+	  $('.form_time').datetimepicker({
+	      language:  'es',
+	      weekStart: 1,
+	      todayBtn:  1,
+	      autoclose: 1,
+	      todayHighlight: 1,
+	      startView: 1,
+	      minView: 0,
+	      maxView: 1,
+	      forceParse: 0
+	    });
+	</script>		
+{%endblock%} 

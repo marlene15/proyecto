@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>
@@ -9,8 +8,11 @@
 	<meta charset="utf-8">
 
 	<link rel="stylesheet" type="text/css" href="/static/estilo.css">
+	<link rel="stylesheet" type="text/css" href="/static/css.css">
 	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">	
+	<!--Para usar el calendario-->
+	<link rel="stylesheet" type="text/css" href="/static/calendar/bootstrap-datetimepicker.min.css">
 </head>
 <body>
 	<div class="container">	
@@ -47,7 +49,7 @@
 	                </ul>
 	              </li>
 
-	              <li><a href="#"><span class="glyphicon glyphicon-book"></span> Reportes</a></li>   
+	              <li><a href="/reportes"><span class="glyphicon glyphicon-book"></span> Reportes</a></li>   
 	              <li><a href="#"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>             
 	            </ul>     
 	          </div><!-- /.navbar-collapse -->
@@ -62,11 +64,13 @@
 		<br/>
 		<br/>
 		<br/>
-		<nav class="navbar navbar-inverse navbar-static-top" role="navigation"></nav>	
-	        <div class="container-fluid" id="footer">
-				<p class="text_footer"><center>Derechos Reservados</center></p>
-				<p class="text_footer"><center>Mary Kay ® Inc. 2014</center></p>			
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container-fluid" id="footer">
+				<p class="text_footer"><center><font color="white">Derechos Reservados</font></center></p>
+				<p class="text_footer"><center><font color="white">Mary Kay ® Inc. 2014</font></center></p>			
 			</div>
+		</nav>	
+	        
 	</div>
 
    	{%block script%}			
