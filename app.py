@@ -120,6 +120,10 @@ class Reportes(Handler):
 class Salir(Handler):
     def get(self):
       self.render("salir.html")
+
+class Registrar(Handler):
+    def get(self):
+      self.render("registrar.html")
     
 app = webapp2.WSGIApplication([('/', Login),
                                ('/index', Index),                               
@@ -139,6 +143,7 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/corrector',Corrector),                                                                                                                                                                                          
                                ('/mejillas',Mejillas),                                                                                             
                                ('/reportes',Reportes),
-                               ('/salir',Salir)
+                               ('/salir',Salir),
+                               ('/registrar',Registrar)
                               ],
                               debug=True)
