@@ -6,7 +6,8 @@ import logging
 from google.appengine.ext import db
 from google.appengine.ext import ndb #Importa para usar la base de datos NDB
 from webapp2_extras import sessions
-#from datetime import date #Para usar el formato de fecha
+import re #para expresiones regulares
+from google.appengine.api import mail
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -41,40 +42,39 @@ class Handler(webapp2.RequestHandler):
 #Creamos el modelo NDB, Contiene 4 entidades
 class Cuentas(ndb.Model):
   "Models an individual Guestbook entry with content and date."
+  username = ndb.StringProperty()
+  password = ndb.StringProperty()
+
+#Propiedades de la estructura
+class Usuario(ndb.Model):
   nombre = ndb.StringProperty()
   apellido = ndb.StringProperty()
   email = ndb.StringProperty()
-  username = ndb.StringProperty()
-  password = ndb.StringProperty()
   #fecha = ndb.DateProperty()
   sexo = ndb.StringProperty()
+  cuenta=ndb.StructuredProperty(Cuentas) #Heredamos de la estructura de Cuentas
 
 class Login(Handler):
     def get(self):
-        self.render("loginscreen.html")
-    
+        self.render("loginscreen.html")    
     def post(self):
-        user = self.request.get('user')
-        pw = self.request.get('password')
-        logging.info('Checking user='+ str(user) + ' pw='+ str(pw))
-
-        msg = ''
-        if pw == '' or user == '':
-            msg = 'Please specify Account and Password'
-            self.render("loginscreen.html", error=msg)
+      user = self.request.get("user")
+      pw = self.request.get('password')          
+      msg = ' '
+      if pw == '' or user == '':
+        msg = 'Por favor especifique el usuario y la contrasena'
+        self.render("loginscreen.html", error=msg)
+      else:
+        consulta=Usuario.query(ndb.AND(Usuario.cuenta.username==user, Usuario.cuenta.password==pw)).get()
+        if consulta is not None:
+          user = self.request.get('user')
+          self.session['user'] = user
+          logging.info("%s just logged in" % user)
+          self.redirect('/index')
         else:
-            #QUERY
-            consulta=Cuentas.query(ndb.AND(Cuentas.username==user, Cuentas.password==pw)).get()
-            if consulta is not None:
-                logging.info('POST consulta=' + str(consulta))
-                #Vinculo la session obteniendo de mi datastore con mi sesion
-                self.session['user'] = consulta.username
-                logging.info("%s just logged in" % user)
-                self.render("index.html")
-            else:
-                logging.info('POST consulta=' + str(consulta))
-                msg = 'Incorrect Password'
-                self.render("loginscreen.html", error=msg)
+          msg = 'Usuario o contrasena incorrectos'
+          self.render("loginscreen.html",error=msg)
+      
 
 class Index(Handler):
     def get(self): 
@@ -156,10 +156,11 @@ class Salir(Handler):
             del self.session['user']
             self.redirect('/')
 
-class Registrar(Handler):
-    def get(self):
+class Registra(Handler):
+  def get(self):
         self.render("registrar.html")
 
+class Registrar(Handler):
     def post(self):
         nombre = self.request.get('nombre')
         apellido = self.request.get('apellido')
@@ -169,16 +170,26 @@ class Registrar(Handler):
         #fecha = self.request.get('fecha')
         sexo = self.request.get('sexo')
 
-        cuenta = Cuentas(nombre=nombre, apellido=apellido, email=email,  username=user, password=pw, sexo=sexo)
-        
-        #EL VALOR REGRESADO POR PUT ES UNA LLAVE, LA CUAL PUEDE SER USADA....
-        cuentakey=cuenta.put()
-        #OBTENGO LA ENTIDAD
-        cuenta_user=cuentakey.get()
-
-        #self.session[user]=cuenta_user.username
-        self.redirect('/')
+        if mail.is_email_valid(email):
+          #Se crea uan entidad de tipos usuarios con propiedades estructuradas
+          usuario=Usuario(nombre=nombre,
+                          apellido=apellido,
+                          email=email,
+                          sexo=sexo,
+                          cuenta=Cuentas(username=user,password=pw)
+                          )
+          #Se guarda la entidad de tipo usuario  con propiedades estructuradas
+          usuario=usuario.put()
+          #Obtengo la llave de la entidad de usuario
+          usuariokey=usuario.get()          
           
+          sender_address = "mar106ale@hotmail.com"
+          subject = "Registro completo"
+          body = "Gracias por registrarse"
+          mail.send_mail(sender_address, email, subject, body)
+          self.redirect('/')           
+        else:
+          self.render("registrar.html")         
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -205,6 +216,7 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/mejillas',Mejillas),                                                                                             
                                ('/reportes',Reportes),
                                ('/salir',Salir),
+                               ('/registra',Registra),
                                ('/registrar',Registrar)
                               ],
                               debug=True, config=config)
