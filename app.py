@@ -8,7 +8,6 @@ from google.appengine.ext import ndb #Importa para usar la base de datos NDB
 from webapp2_extras import sessions
 import re #para expresiones regulares
 from google.appengine.api import mail
-import sys
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
