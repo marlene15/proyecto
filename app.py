@@ -6,7 +6,7 @@ import logging
 from google.appengine.ext import db
 from google.appengine.ext import ndb #Importa para usar la base de datos NDB
 from webapp2_extras import sessions
-from datetime import date #Para usar el formato de fecha
+#from datetime import date #Para usar el formato de fecha
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -16,6 +16,22 @@ def render_str(template, **params):
     return t.render(params)
 
 class Handler(webapp2.RequestHandler):
+    def dispatch(self):
+      # Get a session store for this request.
+      self.session_store = sessions.get_store(request=self.request)
+
+      try:
+          # Dispatch the request.
+          webapp2.RequestHandler.dispatch(self)
+      finally:
+          # Save all sessions.
+          self.session_store.save_sessions(self.response)
+
+    @webapp2.cached_property
+    def session(self):
+        # Returns a session using the default cookie key.
+        return self.session_store.get_session()
+
     def render(self, template, **kw):        
         self.response.out.write(render_str(template, **kw))
 
@@ -25,33 +41,50 @@ class Handler(webapp2.RequestHandler):
 #Creamos el modelo NDB, Contiene 4 entidades
 class Cuentas(ndb.Model):
   "Models an individual Guestbook entry with content and date."
+  nombre = ndb.StringProperty()
+  apellido = ndb.StringProperty()
+  email = ndb.StringProperty()
   username = ndb.StringProperty()
   password = ndb.StringProperty()
+  #fecha = ndb.DateProperty()
+  sexo = ndb.StringProperty()
 
 class Login(Handler):
     def get(self):
-      self.render("loginscreen.html")
+        self.render("loginscreen.html")
     
     def post(self):
-      user = self.request.get("user")
-      logging.info('POST user='+str(user))
-      pw = self.request.get('password')
-      logging.info('POST password='+str(pw))
-      msg = ' '
-      password = "marlene"
-      if pw == '' or user == '':
-          msg = 'Please specify Account and Password'
-          self.render("loginscreen.html", error=msg)
-      elif pw == password:
-          msg = 'Bienvenido'
-          self.render("index.html") 
-      else:
-        msg = 'Password incorrecto'
-        self.render("loginscreen.html",error=msg)
+        user = self.request.get('user')
+        pw = self.request.get('password')
+        logging.info('Checking user='+ str(user) + ' pw='+ str(pw))
+
+        msg = ''
+        if pw == '' or user == '':
+            msg = 'Please specify Account and Password'
+            self.render("loginscreen.html", error=msg)
+        else:
+            #QUERY
+            consulta=Cuentas.query(ndb.AND(Cuentas.username==user, Cuentas.password==pw)).get()
+            if consulta is not None:
+                logging.info('POST consulta=' + str(consulta))
+                #Vinculo la session obteniendo de mi datastore con mi sesion
+                self.session['user'] = consulta.username
+                logging.info("%s just logged in" % user)
+                self.render("index.html")
+            else:
+                logging.info('POST consulta=' + str(consulta))
+                msg = 'Incorrect Password'
+                self.render("loginscreen.html", error=msg)
 
 class Index(Handler):
-    def get(self):        
-        self.render("index.html") 
+    def get(self): 
+        user = self.session.get('user')
+        logging.info('Checkin index user value='+str(user))
+        template_values={
+            'user':user
+            }
+        self.render("index.html", user=template_values)       
+        #self.render("index.html") 
 
 class Maquillaje(Handler):
     def get(self):
@@ -119,11 +152,39 @@ class Reportes(Handler):
 
 class Salir(Handler):
     def get(self):
-      self.render("salir.html")
+        if self.session.get('user'):
+            del self.session['user']
+            self.redirect('/')
 
 class Registrar(Handler):
     def get(self):
-      self.render("registrar.html")
+        self.render("registrar.html")
+
+    def post(self):
+        nombre = self.request.get('nombre')
+        apellido = self.request.get('apellido')
+        email = self.request.get('email')                
+        user = self.request.get('user')
+        pw = self.request.get('password')
+        #fecha = self.request.get('fecha')
+        sexo = self.request.get('sexo')
+
+        cuenta = Cuentas(nombre=nombre, apellido=apellido, email=email,  username=user, password=pw, sexo=sexo)
+        
+        #EL VALOR REGRESADO POR PUT ES UNA LLAVE, LA CUAL PUEDE SER USADA....
+        cuentakey=cuenta.put()
+        #OBTENGO LA ENTIDAD
+        cuenta_user=cuentakey.get()
+
+        #self.session[user]=cuenta_user.username
+        self.redirect('/')
+          
+
+config = {}
+config['webapp2_extras.sessions'] = {
+  'secret_key': 'some-secret-key',
+}
+
     
 app = webapp2.WSGIApplication([('/', Login),
                                ('/index', Index),                               
@@ -146,4 +207,4 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/salir',Salir),
                                ('/registrar',Registrar)
                               ],
-                              debug=True)
+                              debug=True, config=config)
