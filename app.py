@@ -8,6 +8,7 @@ from google.appengine.ext import ndb #Importa para usar la base de datos NDB
 from webapp2_extras import sessions
 import re #para expresiones regulares
 from google.appengine.api import mail
+import sys
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -183,10 +184,11 @@ class Registrar(Handler):
           #Obtengo la llave de la entidad de usuario
           usuariokey=usuario.get()          
           
-          sender_address = "mar106ale@hotmail.com"
+          sender_address = "10460292@itcolima.edu.mx"
           subject = "Registro completo"
           body = "Gracias por registrarse"
-          mail.send_mail(sender_address, email, subject, body)
+          mail.send_mail(sender_address,email, subject, body)
+
           self.redirect('/')           
         else:
           self.render("registrar.html")         
