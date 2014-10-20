@@ -11,26 +11,65 @@
                   <p>perfectamente con los Maquillajes Mary Kay.</p>                  
                   <br/>
                   <br/>
-                  
-            <form role="form">
-	      	<a href="#"><img src="/public/img/Lineadecolor/Ojos/Corrector/C1.png"/></a>
-                  <input type="text"  size="8" name="c1">
-                  <label>Cant.</label> 
-                  <a href="#"><img src="/public/img/Lineadecolor/Ojos/Corrector/C2.png"/></a>
-                  <input type="text"  size="8" name="c2">
-                  <label>Cant.</label> 
-                  <br/> 
-                  <a href="#"><img src="/public/img/Lineadecolor/Ojos/Corrector/C3.png"/></a>
-	      	<input type="text"  size="8" name="c3">
-                  <label>Cant.</label>
-                  <a href="#"><img src="/public/img/Lineadecolor/Ojos/Corrector/C4.png"/></a>
-	      	<input type="text"  size="8" name="c4">
-                  <label>Cant.</label> 
-                  <div align="right">
-                        <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
-                        <button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'">Cancelar <span class='glyphicon glyphicon-remove-circle'></span></button>
-                  </div>
-            </form>
+                  <div class="panel panel-primary"> 
+                        <div class="panel-heading">
+                              <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
+                         </div>
+                        <div class="panel-body">
+                              <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
+                        </div>
+                        <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">                           
+                        </table>
+                  </div>                  
+                  <div class="row">
+                        <div class="col-lg-8">
+                              <label for="producto">Producto</label>
+                              <select class="form-control" id="producto">
+                                    <option>10027243 Yellow</option>
+                                    <option>10023468 Ivory 2</option>
+                                    <option>10023469 Beige 1</option>
+                                    <option>10023470 Beige 2</option>
+                                </select>
+                        </div>
+                        <div class="col-lg-2">
+                              <label for="cantidad">Cantidad</label>
+                              <input type="text" class="form-control required" id="cantidad" name="cantidad">
+                        </div>
+                        <div class="col-lg-2" align="center">
+                              <br/>
+                              <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
+                         </div>
+                  </div>                  
+                  <br/>                  
+                  <form role="form">
+      	      	<img src="/public/img/Lineadecolor/Ojos/Corrector/C1.png"/>
+                        <img src="/public/img/Lineadecolor/Ojos/Corrector/C2.png"/>
+                        <img src="/public/img/Lineadecolor/Ojos/Corrector/C3.png"/>
+                        <img src="/public/img/Lineadecolor/Ojos/Corrector/C4.png"/>
+                        <div align="right">
+                              <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
+                              <button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'">Cancelar <span class='glyphicon glyphicon-remove-circle'></span></button>
+                        </div>
+                  </form>
           </center>
 	  </div>      
 {% endblock %} <!--Fin del contenido del archivo-->
+{%block script%}
+            <script>
+                  function agrega_fila()
+                  {
+                        var opcion_seleccionada = $('#producto option:selected').text();
+                        var id = $('#producto').val();
+                        var cantidad = $('#cantidad').val();
+                        var i=('td').length;
+                        //Agrego el input a cada columna, para almacenar los id de cada especialidad y así poder recuperarlos para ser guardados
+                      var cad="<tr><td><input name='productos[]' value='"+opcion_seleccionada+"' type='hidden'>"+opcion_seleccionada+"</td><td><input name='cantidades[]' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                      $('#tabla').append(cad);
+                  }
+                  // Evento que selecciona la fila y la elimina 
+                  function elimina_fila(boton)
+                  {
+                        $(boton).parent().parent().remove();
+                  }
+            </script>               
+{%endblock%} 
