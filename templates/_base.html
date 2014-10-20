@@ -13,6 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">	
 	<!--Para usar el calendario-->
 	<link rel="stylesheet" type="text/css" href="/static/calendar/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/jquery_ui/css/smoothness/jquery-ui-1.10.4.custom.css">
 </head>
 <body>
 	<div class="container">	
@@ -48,7 +49,7 @@
 	                  <li><a href="/lineadecolor">Línea de Color</a></li>
 	                </ul>
 	              </li>
-
+	              <li><a href="/clientes"><span class="glyphicon glyphicon-book"></span> Clientes</a></li>
 	              <li><a href="/reportes"><span class="glyphicon glyphicon-book"></span> Reportes</a></li>   
 	              <li><a href="/salir"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>             
 	            </ul>     
@@ -73,7 +74,8 @@
 	        
 	</div>
 
-   	{%block script%}			
+   	{%block script%}
+   			
 	{%endblock%} 
 	<script src="/static/bootstrap/js/jquery.min.js"></script> <!--Se debe cargar primero el jquery antes de bootstrap para que todo funcione bien-->
 	<script src="/static/bootstrap/js/bootstrap.min.js"></script>	

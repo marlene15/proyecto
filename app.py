@@ -20,7 +20,6 @@ class Handler(webapp2.RequestHandler):
     def dispatch(self):
       # Get a session store for this request.
       self.session_store = sessions.get_store(request=self.request)
-
       try:
           # Dispatch the request.
           webapp2.RequestHandler.dispatch(self)
@@ -54,6 +53,12 @@ class Usuario(ndb.Model):
   sexo = ndb.StringProperty()
   cuenta=ndb.StructuredProperty(Cuentas) #Heredamos de la estructura de Cuentas
 
+class Clientes(ndb.Model):
+  nombre = ndb.StringProperty()
+  apellidos = ndb.StringProperty()
+  email = ndb.StringProperty()
+  tel = ndb.StringProperty()
+
 class Login(Handler):
     def get(self):
         self.render("loginscreen.html")    
@@ -73,8 +78,7 @@ class Login(Handler):
           self.redirect('/index')
         else:
           msg = 'Usuario o contrasena incorrectos'
-          self.render("loginscreen.html",error=msg)
-      
+          self.render("loginscreen.html",error=msg)      
 
 class Index(Handler):
     def get(self): 
@@ -190,7 +194,31 @@ class Registrar(Handler):
 
           self.redirect('/')           
         else:
-          self.render("registrar.html")         
+          self.render("registrar.html")    
+
+class Registra_Cliente(Handler):  
+    def get(self):
+        self.render("clientes.html") 
+    def post(self):
+        nombre = self.request.get('nombre')
+        apellidos = self.request.get('apellidos')
+        email = self.request.get('email')                
+        tel = self.request.get('telefono')
+
+        logging.info('nombre: '+str(nombre))
+        logging.info('apellidos: '+str(apellidos))
+        logging.info('email: '+str(email))
+        logging.info('tel: '+str(tel))
+
+        clientes=Clientes(nombre=nombre,
+                          apellidos=apellidos,
+                          email=email,
+                          tel=tel)
+        #Se guarda la entidad de tipo clientes con propiedades estructuradas
+        clientes=clientes.put()
+        #Obtengo la llave de la entidad de clientes
+        usuariokey=clientes.get()  
+        self.redirect('/index') 
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -218,6 +246,7 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/reportes',Reportes),
                                ('/salir',Salir),
                                ('/registra',Registra),
-                               ('/registrar',Registrar)
+                               ('/registrar',Registrar),
+                               ('/clientes',Registra_Cliente)
                               ],
                               debug=True, config=config)
