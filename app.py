@@ -63,6 +63,7 @@ class MaquillajeM(ndb.Model):
   producto = ndb.StringProperty()
   descripcion = ndb.StringProperty()
   cantidad = ndb.StringProperty()
+  cliente = ndb.StringProperty()
   precio_total = ndb.StringProperty()
 
 class LineadecolorM(ndb.Model):
@@ -108,7 +109,19 @@ class Maquillaje(Handler):
       
 class Maquillaje1(Handler):
     def get(self):
-      self.render("maquillaje1.html")
+      # consulta = Clientes.query().fetch()
+      # logging.info('Clientes: '+str(consulta))
+      # registro = []
+      # registro = consulta
+      # logging.info('Registro: '+str(registro[1]))
+
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("maquillaje1.html",registro=registro2)
 
 class Maquillaje2(Handler):
     def get(self):
@@ -238,6 +251,7 @@ class Agrega_maquillaje(Handler):
       descripcion = self.request.get('descripcion') 
       cantidades = self.request.get('cantidades', allow_multiple=True)
       precios = self.request.get('precios', allow_multiple=True)
+      cliente = self.request.get('cliente', allow_multiple=True)
       
       logging.info('Tamanio del array:  '+str(len(cantidades)))
 
@@ -250,6 +264,7 @@ class Agrega_maquillaje(Handler):
         maquillajem=MaquillajeM(producto=productos[indice],
                             descripcion=descripcion,
                             cantidad=cantidades[indice],
+                            cliente=cliente[indice],
                             precio_total=precios[indice])
         #Se guarda la entidad de tipo clientes con propiedades estructuradas
         maquillajem=maquillajem.put()
