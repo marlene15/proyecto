@@ -84,10 +84,18 @@
                         var cantidad = $('#cantidad').val();
                         var precio = $('#precio').val();
                         precio=precio*cantidad;
-                        var i=('td').length;
-                        //Agrego el input a cada columna, para almacenar los id de cada especialidad y así poder recuperarlos para ser guardados
-                      var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
-                      $('#tabla').append(cad);
+
+                        if(cantidad=='')
+                          { 
+                            alert("El campo cantidad es obligatorio"); 
+                          }
+                        else
+                          { 
+                            //Agrego el input a cada columna, para almacenar los campos de cada producto y así poder recuperarlos para ser guardados
+                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                            $('#tabla').append(cad);
+                          }
+                        
                   }
                   // Evento que selecciona la fila y la elimina 
                   function elimina_fila(boton)
