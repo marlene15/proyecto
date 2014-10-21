@@ -6,14 +6,18 @@
             <center>
 
                   <img src="/public/img/Maquillaje/Tonosmaq1/maquillaje.png"/>
-                  <p><b>$119.00</b></p>
+                  <br/>
+                  <br/>
+                  <label for="precio"><strong>Precio: </strong></label>                  
+                  <input type="text" class="form-control required" id="precio" name="precio" readonly="readonly" value="119">
                   <p>De consistencia ligera y larga duración, los maquillajes Mary Kay</p> 
                   <p>te ofrecen la cobertura que tu cutis necesita. Además, le brindan</p>
                   <p>fabulosos beneficios como el control del brillo facial, utiliza</p>
                   <p> el maquillaje de cobertura media para piel combinada a grasa.</p>
                   <br/>
                   
-            <form role="form">
+            <form role="form" action="/agrega_maquillaje" method="post">
+                  <input type="hidden" name="descripcion" value="Maquillaje liquido cobertura media" id="descripcion">
                   <div class="panel panel-primary"> 
                         <div class="panel-heading">
                               <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
@@ -21,7 +25,14 @@
                         <div class="panel-body">
                               <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
                         </div>
-                        <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">                           
+
+                        <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+                          <tr>
+                            <td class="alert alert-info alert-dismissable">Producto</td>
+                            <td class="alert alert-info alert-dismissable">Cantidad</td>
+                            <td class="alert alert-info alert-dismissable">Precio</td>
+                            <td class="alert alert-info alert-dismissable"></td>
+                          </tr>   
                         </table>
                   </div>                  
                   <div class="row">
@@ -47,12 +58,12 @@
                   </div>
 
                   <img src="/public/img/Maquillaje/Tonosmaq1/1-ivory100.jpg"/>
-            	<img src="/public/img/Maquillaje/Tonosmaq1/2-ivory200.jpg"/>                  
-            	<img src="/public/img/Maquillaje/Tonosmaq1/3-beige300.jpg"/>
+                	<img src="/public/img/Maquillaje/Tonosmaq1/2-ivory200.jpg"/>                  
+                	<img src="/public/img/Maquillaje/Tonosmaq1/3-beige300.jpg"/>
                   <br/>                  
-            	<img src="/public/img/Maquillaje/Tonosmaq1/4-beige302.jpg"/>                 
-            	<img src="/public/img/Maquillaje/Tonosmaq1/5-beige304.jpg"/>                  
-            	<img src="/public/img/Maquillaje/Tonosmaq1/6-beige400.jpg"/>   	
+                	<img src="/public/img/Maquillaje/Tonosmaq1/4-beige302.jpg"/>                 
+                	<img src="/public/img/Maquillaje/Tonosmaq1/5-beige304.jpg"/>                  
+                	<img src="/public/img/Maquillaje/Tonosmaq1/6-beige400.jpg"/>   	
                   
                   <div align="right">
                         <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
@@ -68,12 +79,14 @@
             <script>
                   function agrega_fila()
                   {
-                        var opcion_seleccionada = $('#producto option:selected').text();
+                        var producto = $('#producto option:selected').text();
                         var id = $('#producto').val();
                         var cantidad = $('#cantidad').val();
+                        var precio = $('#precio').val();
+                        precio=precio*cantidad;
                         var i=('td').length;
                         //Agrego el input a cada columna, para almacenar los id de cada especialidad y así poder recuperarlos para ser guardados
-                      var cad="<tr><td><input name='productos[]' value='"+opcion_seleccionada+"' type='hidden'>"+opcion_seleccionada+"</td><td><input name='cantidades[]' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                      var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
                       $('#tabla').append(cad);
                   }
                   // Evento que selecciona la fila y la elimina 

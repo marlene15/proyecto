@@ -59,6 +59,14 @@ class Clientes(ndb.Model):
   email = ndb.StringProperty()
   tel = ndb.StringProperty()
 
+class MaquillajeM(ndb.Model):
+  producto = ndb.StringProperty()
+  descripcion = ndb.StringProperty()
+  cantidad = ndb.StringProperty()
+  precio_total = ndb.StringProperty()
+
+#class LineadecolorM(ndb.Model):
+
 class Login(Handler):
     def get(self):
         self.render("loginscreen.html")    
@@ -205,10 +213,10 @@ class Registra_Cliente(Handler):
         email = self.request.get('email')                
         tel = self.request.get('telefono')
 
-        logging.info('nombre: '+str(nombre))
-        logging.info('apellidos: '+str(apellidos))
-        logging.info('email: '+str(email))
-        logging.info('tel: '+str(tel))
+        # logging.info('nombre: '+str(nombre))
+        # logging.info('apellidos: '+str(apellidos))
+        # logging.info('email: '+str(email))
+        # logging.info('tel: '+str(tel))
 
         clientes=Clientes(nombre=nombre,
                           apellidos=apellidos,
@@ -219,6 +227,31 @@ class Registra_Cliente(Handler):
         #Obtengo la llave de la entidad de clientes
         usuariokey=clientes.get()  
         self.redirect('/index') 
+
+class Agrega_maquillaje(Handler):  
+    def post(self):
+      productos = self.request.get('productos', allow_multiple=True)
+      descripcion = self.request.get('descripcion') 
+      cantidades = self.request.get('cantidades', allow_multiple=True)
+      precios = self.request.get('precios', allow_multiple=True)
+      
+      logging.info('Tamanio del array:  '+str(len(cantidades)))
+
+      logging.info('Descripcion: '+str(descripcion))
+      logging.info('Cantidad en pa posicion 2: '+str(cantidades[2]))
+
+      #Se coloca el while para agregar todos los datos que se agregaron en la tabla
+      indice=0
+      while indice < len(cantidades):
+        maquillajem=MaquillajeM(producto=productos[indice],
+                            descripcion=descripcion,
+                            cantidad=cantidades[indice],
+                            precio_total=precios[indice])
+        #Se guarda la entidad de tipo clientes con propiedades estructuradas
+        maquillajem=maquillajem.put()
+        indice += 1 
+
+      self.redirect('/maquillaje1') 
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -247,6 +280,7 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/salir',Salir),
                                ('/registra',Registra),
                                ('/registrar',Registrar),
-                               ('/clientes',Registra_Cliente)
+                               ('/clientes',Registra_Cliente),
+                               ('/agrega_maquillaje',Agrega_maquillaje)
                               ],
                               debug=True, config=config)
