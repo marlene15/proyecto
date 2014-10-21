@@ -5,46 +5,46 @@
       <div class="form-group">
             <center>
                   <img src="/public/img/Lineadecolor/Labiales/LL1/labial.png"/>
-                  <p><b>$150.00</b></p>
-                  <p>Sumerge tus labios en una nueva dimensión de color con una </p> 
+                  <br/>
+                  <label for="precio"><strong>Precio: </strong></label>                  
+                  <input type="text" class="form-control required" id="precio" name="precio" readonly="readonly" value="150">
                   <p> suave experiencia de humectación intensa. Con ingredientes</p>
                   <p>avanzados para suavizar la apariencia de finas líneas y</p>
                   <p>ayudar a lucir unos labios con mayor volumen.</p>
                   <br/>
                   <br/>
-                  <div class="panel panel-primary"> 
-                        <div class="panel-heading">
-                              <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
-                         </div>
-                        <div class="panel-body">
-                              <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
+                  <form role="form" action="/agregar_lineadecolor" method="post">                  
+                        <div class="panel panel-primary"> 
+                              <div class="panel-heading">
+                                    <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
+                               </div>
+                              <div class="panel-body">
+                                    <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
+                              </div>
+                              <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">                           
+                              </table>
+                        </div>                  
+                        <div class="row">
+                              <div class="col-lg-8">
+                                    <label for="producto">Producto</label>
+                                    <select class="form-control" id="producto">
+                                          <option>10054822 Coral me Coral</option>
+                                          <option>10054828 Firecracker</option>
+                                          <option>10054831 Mystic Plum</option>
+                                          <option>10054825 Natural Beauté</option>
+                                          <option>10054829 Sizzling Red</option>                         
+                                          <option>10054832 Spice 'n' Nice</option>                     
+                                      </select>
+                              </div>
+                              <div class="col-lg-2">
+                                    <label for="cantidad">Cantidad</label>
+                                    <input type="text" class="form-control required" id="cantidad" name="cantidad">
+                              </div>
+                              <div class="col-lg-2" align="center">
+                                    <br/>
+                                    <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
+                               </div>
                         </div>
-                        <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">                           
-                        </table>
-                  </div>                  
-                  <div class="row">
-                        <div class="col-lg-8">
-                              <label for="producto">Producto</label>
-                              <select class="form-control" id="producto">
-                                    <option>10054822 Coral me Coral</option>
-                                    <option>10054828 Firecracker</option>
-                                    <option>10054831 Mystic Plum</option>
-                                    <option>10054825 Natural Beauté</option>
-                                    <option>10054829 Sizzling Red</option>                         
-                                    <option>10054832 Spice 'n' Nice</option>                     
-                                </select>
-                        </div>
-                        <div class="col-lg-2">
-                              <label for="cantidad">Cantidad</label>
-                              <input type="text" class="form-control required" id="cantidad" name="cantidad">
-                        </div>
-                        <div class="col-lg-2" align="center">
-                              <br/>
-                              <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
-                         </div>
-                  </div>
-                                    
-                  <form role="form">
                         <img src="/public/img/Lineadecolor/Labiales/LL1/L2.png"/>
                   	<img src="/public/img/Lineadecolor/Labiales/LL1/L6.png"/>
                   	<img src="/public/img/Lineadecolor/Labiales/LL1/L7.png"/>
@@ -63,13 +63,23 @@
             <script>
                   function agrega_fila()
                   {
-                        var opcion_seleccionada = $('#producto option:selected').text();
+                        var producto = $('#producto option:selected').text();
                         var id = $('#producto').val();
                         var cantidad = $('#cantidad').val();
-                        var i=('td').length;
-                        //Agrego el input a cada columna, para almacenar los id de cada especialidad y así poder recuperarlos para ser guardados
-                      var cad="<tr><td><input name='productos[]' value='"+opcion_seleccionada+"' type='hidden'>"+opcion_seleccionada+"</td><td><input name='cantidades[]' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
-                      $('#tabla').append(cad);
+                        var precio = $('#precio').val();
+                        precio=precio*cantidad;
+
+                        if(cantidad=='')
+                          { 
+                            alert("El campo cantidad es obligatorio"); 
+                          }
+                        else
+                          { 
+                            //Agrego el input a cada columna, para almacenar los campos de cada producto y así poder recuperarlos para ser guardados
+                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                            $('#tabla').append(cad);
+                          }
+                        
                   }
                   // Evento que selecciona la fila y la elimina 
                   function elimina_fila(boton)

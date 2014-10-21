@@ -65,7 +65,11 @@ class MaquillajeM(ndb.Model):
   cantidad = ndb.StringProperty()
   precio_total = ndb.StringProperty()
 
-#class LineadecolorM(ndb.Model):
+class LineadecolorM(ndb.Model):
+  producto = ndb.StringProperty()
+  descripcion = ndb.StringProperty()
+  cantidad = ndb.StringProperty()
+  precio_total = ndb.StringProperty()
 
 class Login(Handler):
     def get(self):
@@ -238,7 +242,7 @@ class Agrega_maquillaje(Handler):
       logging.info('Tamanio del array:  '+str(len(cantidades)))
 
       logging.info('Descripcion: '+str(descripcion))
-      logging.info('Cantidad en pa posicion 2: '+str(cantidades[2]))
+      logging.info('Cantidad en pa posicion 2: '+str(cantidades))
 
       #Se coloca el while para agregar todos los datos que se agregaron en la tabla
       indice=0
@@ -250,8 +254,32 @@ class Agrega_maquillaje(Handler):
         #Se guarda la entidad de tipo clientes con propiedades estructuradas
         maquillajem=maquillajem.put()
         indice += 1 
+      self.render("maquillaje.html")
+      #self.redirect('/maquillaje1') 
 
-      self.redirect('/maquillaje1') 
+class Agregar_lineadecolor(Handler):
+  def post(self):
+      productos = self.request.get('productos', allow_multiple=True)
+      descripcion = self.request.get('descripcion') 
+      cantidades = self.request.get('cantidades', allow_multiple=True)
+      precios = self.request.get('precios', allow_multiple=True)
+      
+      logging.info('Tamanio del array:  '+str(len(cantidades)))
+
+      logging.info('Descripcion: '+str(descripcion))
+      logging.info('Cantidad en pa posicion 2: '+str(cantidades))
+
+      #Se coloca el while para agregar todos los datos que se agregaron en la tabla
+      indice=0
+      while indice < len(cantidades):
+        lineadecolorm=LineadecolorM(producto=productos[indice],
+                            descripcion=descripcion,
+                            cantidad=cantidades[indice],
+                            precio_total=precios[indice])
+        #Se guarda la entidad de tipo clientes con propiedades estructuradas
+        lineadecolorm=lineadecolorm.put()
+        indice += 1 
+      self.render("lineadecolor.html")
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -281,6 +309,7 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/registra',Registra),
                                ('/registrar',Registrar),
                                ('/clientes',Registra_Cliente),
-                               ('/agrega_maquillaje',Agrega_maquillaje)
+                               ('/agrega_maquillaje',Agrega_maquillaje),
+                               ('/agregar_lineadecolor',Agregar_lineadecolor)
                               ],
                               debug=True, config=config)

@@ -5,41 +5,43 @@
       <div class="form-group">
 	      <center>
           <img src="/public/img/Lineadecolor/Ojos/Delineador/delineador.jpg"/>
+          <br/>
+          <label for="precio"><strong>Precio: </strong></label>                  
+          <input type="text" class="form-control required" id="precio" name="precio" readonly="readonly" value="138">          
           <p>Se desliza suavemente con un color duradero que no se desvanece.</p> 
           <p>Color intenso y de secado ultrarrápido. De larga duración.</p>
           <br/>
           <br/>
-          <div class="panel panel-primary"> 
-                <div class="panel-heading">
-                      <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
-                 </div>
-                <div class="panel-body">
-                      <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
-                </div>
-                <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">                           
-                </table>
-          </div>                  
-          <div class="row">
-                <div class="col-lg-8">
-                      <label for="producto">Producto</label>
-                      <select class="form-control" id="producto">
-                            <option>10017587 Delineador Líquido para Ojos</option>
-                            <option>10071868 Delineador en Gel para Ojos</option>
-                        </select>
-                </div>
-                <div class="col-lg-2">
-                      <label for="cantidad">Cantidad</label>
-                      <input type="text" class="form-control required" id="cantidad" name="cantidad">
-                </div>
-                <div class="col-lg-2" align="center">
-                      <br/>
-                      <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
-                 </div>
-          </div>                  
-          <br/>          
-
-          <form role="form">
-	         	<img src="/public/img/Lineadecolor/Ojos/Delineador/D1.png"/>
+          <form role="form" action="/agregar_lineadecolor" method="post">
+            <div class="panel panel-primary"> 
+                  <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
+                   </div>
+                  <div class="panel-body">
+                        <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
+                  </div>
+                  <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">                           
+                  </table>
+            </div>                  
+            <div class="row">
+                  <div class="col-lg-8">
+                        <label for="producto">Producto</label>
+                        <select class="form-control" id="producto">
+                              <option>10017587 Delineador Líquido para Ojos</option>
+                              <option>10071868 Delineador en Gel para Ojos</option>
+                          </select>
+                  </div>
+                  <div class="col-lg-2">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="text" class="form-control required" id="cantidad" name="cantidad">
+                  </div>
+                  <div class="col-lg-2" align="center">
+                        <br/>
+                        <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
+                   </div>
+            </div>                  
+            <br/>          
+           	<img src="/public/img/Lineadecolor/Ojos/Delineador/D1.png"/>
             <img src="/public/img/Lineadecolor/Ojos/Delineador/D2.png"/>
             <div align="right">
                         <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
@@ -54,13 +56,23 @@
             <script>
                   function agrega_fila()
                   {
-                        var opcion_seleccionada = $('#producto option:selected').text();
+                        var producto = $('#producto option:selected').text();
                         var id = $('#producto').val();
                         var cantidad = $('#cantidad').val();
-                        var i=('td').length;
-                        //Agrego el input a cada columna, para almacenar los id de cada especialidad y así poder recuperarlos para ser guardados
-                      var cad="<tr><td><input name='productos[]' value='"+opcion_seleccionada+"' type='hidden'>"+opcion_seleccionada+"</td><td><input name='cantidades[]' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
-                      $('#tabla').append(cad);
+                        var precio = $('#precio').val();
+                        precio=precio*cantidad;
+
+                        if(cantidad=='')
+                          { 
+                            alert("El campo cantidad es obligatorio"); 
+                          }
+                        else
+                          { 
+                            //Agrego el input a cada columna, para almacenar los campos de cada producto y así poder recuperarlos para ser guardados
+                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                            $('#tabla').append(cad);
+                          }
+                        
                   }
                   // Evento que selecciona la fila y la elimina 
                   function elimina_fila(boton)
