@@ -1,10 +1,11 @@
 {% extends "_base.html" %} <!--Hereda el contenido del _base.html-->
 {% set active_page = "labial1" %}
 {% block bodycontent %} <!--Inicio del contenido del archivo-->
-      <h2><center>Tonos del lápiz labial True Dimensions</center></h2>
+      <h2><center>Tonos de maquillaje Mary Kay</center></h2>
       <div class="form-group">
             <center>
-                  <img src="/public/img/Lineadecolor/Labiales/LL1/labial.png"/>
+                  <img src="/public/img/Maquillaje/Tonosmaq1/maquillaje.png"/>
+                  <br/>
                   <br/>
                   <label for="precio"><strong>Precio: </strong></label>                  
                   <input type="text" class="form-control required" id="precio" name="precio" readonly="readonly" value="150">
@@ -12,64 +13,81 @@
                   <p>avanzados para suavizar la apariencia de finas líneas y</p>
                   <p>ayudar a lucir unos labios con mayor volumen.</p>
                   <br/>
-                  <br/>
-                  <form role="form" action="/agregar_lineadecolor" method="post">                  
-                        <div class="panel panel-primary"> 
-                              <div class="panel-heading">
-                                    <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
-                               </div>
-                              <div class="panel-body">
-                                    <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
-                              </div>
-                              <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
-                                <tr>
-                                    <td class="alert alert-info alert-dismissable">Producto</td>
-                                    <td class="alert alert-info alert-dismissable">Cantidad</td>
-                                    <td class="alert alert-info alert-dismissable">Precio</td>
-                                    <td class="alert alert-info alert-dismissable"></td>
-                                </tr>                            
-                              </table>
-                        </div>                  
-                        <div class="row">
-                              <div class="col-lg-8">
-                                    <label for="producto">Producto</label>
-                                    <select class="form-control" id="producto">
-                                          <option>10054822 Coral me Coral</option>
-                                          <option>10054828 Firecracker</option>
-                                          <option>10054831 Mystic Plum</option>
-                                          <option>10054825 Natural Beauté</option>
-                                          <option>10054829 Sizzling Red</option>                         
-                                          <option>10054832 Spice 'n' Nice</option>                     
-                                      </select>
-                              </div>
-                              <div class="col-lg-2">
-                                    <label for="cantidad">Cantidad</label>
-                                    <input type="text" class="form-control required" id="cantidad" name="cantidad">
-                              </div>
-                              <div class="col-lg-2" align="center">
-                                    <br/>
-                                    <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
-                               </div>
+                  
+            <form role="form" action="/agregar_lineadecolor" method="post">
+                  <input type="hidden" name="descripcion" value="Labial True Dimensions" id="descripcion">
+                  <div class="panel panel-primary"> 
+                        <div class="panel-heading">
+                              <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
+                         </div>
+                        <div class="panel-body">
+                              <p>En esta tabla se agregarán los productos y sus respectivas cantidades que se venderán</p>
                         </div>
-                        <img src="/public/img/Lineadecolor/Labiales/LL1/L2.png"/>
-                  	<img src="/public/img/Lineadecolor/Labiales/LL1/L6.png"/>
-                  	<img src="/public/img/Lineadecolor/Labiales/LL1/L7.png"/>
-                        <img src="/public/img/Lineadecolor/Labiales/LL1/L3.png"/>
-                  	<img src="/public/img/Lineadecolor/Labiales/LL1/L4.png"/>
-                        <img src="/public/img/Lineadecolor/Labiales/LL1/L5.png"/>
-                        <div align="right">
-                              <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
-                              <button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'">Cancelar <span class='glyphicon glyphicon-remove-circle'></span></button>
+
+                        <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+                          <tr>
+                            <td class="alert alert-info alert-dismissable">Producto</td>
+                            <td class="alert alert-info alert-dismissable">Cantidad</td>
+                            <td class="alert alert-info alert-dismissable">Precio</td>
+                            <td class="alert alert-info alert-dismissable">Cliente</td>
+                            <td class="alert alert-info alert-dismissable"></td>
+                          </tr>   
+                        </table>
+                  </div>                  
+                  <div class="row">
+                        <div class="col-lg-5">
+                              <label for="producto">Producto</label>
+                              <select class="form-control" id="producto">
+                                    <option>10054822 Coral me Coral</option>
+                                    <option>10054828 Firecracker</option>
+                                    <option>10054831 Mystic Plum</option>
+                                    <option>10054825 Natural Beauté</option>
+                                    <option>10054829 Sizzling Red</option>                         
+                                    <option>10054832 Spice 'n' Nice</option>                     
+                              </select>
                         </div>
-                  </form>
-           </center>
+                        <div class="col-lg-2">
+                              <label for="cantidad">Cantidad</label>
+                              <input type="text" class="form-control required" id="cantidad" name="cantidad">
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="cliente">Cliente</label>
+                            <select class="form-control" id="cliente">
+                                {%for registros in registro%}
+                                <option>{{registros.nombre}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="col-lg-2" align="center">
+                              <br/>
+                              <button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar <span class='glyphicon glyphicon-plus-sign'></span></button>
+                         </div>
+                  </div>
+                  
+                  <img src="/public/img/Maquillaje/Tonosmaq1/1-ivory100.jpg"/>
+                  <img src="/public/img/Maquillaje/Tonosmaq1/2-ivory200.jpg"/>                  
+                  <img src="/public/img/Maquillaje/Tonosmaq1/3-beige300.jpg"/>
+                  <br/>                  
+                  <img src="/public/img/Maquillaje/Tonosmaq1/4-beige302.jpg"/>                 
+                  <img src="/public/img/Maquillaje/Tonosmaq1/5-beige304.jpg"/>                  
+                  <img src="/public/img/Maquillaje/Tonosmaq1/6-beige400.jpg"/>    
+                  
+                  <div align="right">
+                        <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
+                        <button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'">Cancelar <span class='glyphicon glyphicon-remove-circle'></span></button>
+                  </div>
+            </form>     
+            </center>
       </div>
+      
 {% endblock %} <!--Fin del contenido del archivo-->
+
 {%block script%}
             <script>
                   function agrega_fila()
                   {
                         var producto = $('#producto option:selected').text();
+                        var cliente = $('#cliente option:selected').text();
                         var id = $('#producto').val();
                         var cantidad = $('#cantidad').val();
                         var precio = $('#precio').val();
@@ -82,7 +100,7 @@
                         else
                           { 
                             //Agrego el input a cada columna, para almacenar los campos de cada producto y así poder recuperarlos para ser guardados
-                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td><input name='cliente' value='"+cliente+"' type='hidden'>"+cliente+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
                             $('#tabla').append(cad);
                           }
                         

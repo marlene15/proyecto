@@ -16,6 +16,7 @@
                   <br/>
                   <br/>
                   <form role="form" action="/agregar_lineadecolor" method="post">
+                    <input type="hidden" name="descripcion" value="Lapiz Delineador para Ojos" id="descripcion">
                     <div class="panel panel-primary"> 
                         <div class="panel-heading">
                               <h3 class="panel-title"><strong>Productos agregados para la venta</strong></h3>
@@ -28,12 +29,13 @@
                             <td class="alert alert-info alert-dismissable">Producto</td>
                             <td class="alert alert-info alert-dismissable">Cantidad</td>
                             <td class="alert alert-info alert-dismissable">Precio</td>
+                            <td class="alert alert-info alert-dismissable">Cliente</td>                            
                             <td class="alert alert-info alert-dismissable"></td>
                           </tr>                          
                         </table>
                     </div>                  
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-5">
                               <label for="producto">Producto</label>
                               <select class="form-control" id="producto">
                                     <option>10048389 Black</option>
@@ -45,6 +47,14 @@
                         <div class="col-lg-2">
                               <label for="cantidad">Cantidad</label>
                               <input type="text" class="form-control required" id="cantidad" name="cantidad">
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="cliente">Cliente</label>
+                            <select class="form-control" id="cliente">
+                                {%for registros in registro%}
+                                <option>{{registros.nombre}}</option>
+                                {%endfor%}
+                            </select>
                         </div>
                         <div class="col-lg-2" align="center">
                               <br/>
@@ -69,6 +79,7 @@
                   function agrega_fila()
                   {
                         var producto = $('#producto option:selected').text();
+                        var cliente = $('#cliente option:selected').text();
                         var id = $('#producto').val();
                         var cantidad = $('#cantidad').val();
                         var precio = $('#precio').val();
@@ -81,7 +92,7 @@
                         else
                           { 
                             //Agrego el input a cada columna, para almacenar los campos de cada producto y así poder recuperarlos para ser guardados
-                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+                            var cad="<tr><td><input name='productos' value='"+producto+"' type='hidden'>"+producto+"</td><td><input name='cantidades' value='"+cantidad+"' type='hidden'>"+cantidad+"</td><td><input name='precios' value='"+precio+"' type='hidden'>"+precio+"</td><td><input name='cliente' value='"+cliente+"' type='hidden'>"+cliente+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
                             $('#tabla').append(cad);
                           }
                         

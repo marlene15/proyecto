@@ -70,6 +70,7 @@ class LineadecolorM(ndb.Model):
   producto = ndb.StringProperty()
   descripcion = ndb.StringProperty()
   cantidad = ndb.StringProperty()
+  cliente = ndb.StringProperty()
   precio_total = ndb.StringProperty()
 
 class Login(Handler):
@@ -125,11 +126,23 @@ class Maquillaje1(Handler):
 
 class Maquillaje2(Handler):
     def get(self):
-      self.render("maquillaje2.html")
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("maquillaje2.html",registro=registro2)
 
 class Maquillaje3(Handler):
     def get(self):
-      self.render("maquillaje3.html")      
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("maquillaje3.html",registro=registro2)
 
 class Lineadecolor(Handler):
     def get(self):
@@ -141,11 +154,23 @@ class Labios(Handler):
 
 class Labial1(Handler):
     def get(self):
-      self.render("labial1.html")  
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("labial1.html",registro=registro2)
 
 class Labial2(Handler):
     def get(self):
-      self.render("labial2.html")  
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("labial2.html",registro=registro2)
 
 class Ojos(Handler):
     def get(self):
@@ -153,28 +178,64 @@ class Ojos(Handler):
 
 class Corrector(Handler):
     def get(self):
-      self.render("corrector.html") 
-
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("corrector.html",registro=registro2)  
+      
 class Sombras(Handler):
     def get(self):
-      self.render("sombras.html") 
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("sombras.html",registro=registro2)
 
 class Rimel(Handler):
     def get(self):
-      self.render("rimel.html")              
-
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("rimel.html",registro=registro2)
+        
 class Delineador(Handler):
     def get(self):
-      self.render("delineador.html")
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("delineador.html",registro=registro2)
 
 class Lapiz(Handler):
     def get(self):
-      self.render("lapiz.html")
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("lapiz.html",registro=registro2)
 
 class Mejillas(Handler):
     def get(self):
-      self.render("mejillas.html")        
-
+      consulta=Clientes.query()
+      for result in consulta.iter():
+           logging.info("result:" + str(result))
+      registro2=[]
+      registro2=consulta
+      logging.info("registro2:" + str(registro2))
+      self.render("mejillas.html",registro=registro2)
+            
 class Reportes(Handler):
     def get(self):
       self.render("reportes.html")
@@ -273,11 +334,12 @@ class Agrega_maquillaje(Handler):
       #self.redirect('/maquillaje1') 
 
 class Agregar_lineadecolor(Handler):
-  def post(self):
+    def post(self):
       productos = self.request.get('productos', allow_multiple=True)
       descripcion = self.request.get('descripcion') 
       cantidades = self.request.get('cantidades', allow_multiple=True)
       precios = self.request.get('precios', allow_multiple=True)
+      cliente = self.request.get('cliente', allow_multiple=True)
       
       logging.info('Tamanio del array:  '+str(len(cantidades)))
 
@@ -290,6 +352,7 @@ class Agregar_lineadecolor(Handler):
         lineadecolorm=LineadecolorM(producto=productos[indice],
                             descripcion=descripcion,
                             cantidad=cantidades[indice],
+                            cliente=cliente[indice],
                             precio_total=precios[indice])
         #Se guarda la entidad de tipo clientes con propiedades estructuradas
         lineadecolorm=lineadecolorm.put()
