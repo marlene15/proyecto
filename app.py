@@ -206,63 +206,87 @@ class Ojos(Handler):
 
 class Corrector(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Corrector para ojos'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("corrector.html",registro=registro2)  
+      self.render("corrector.html",registro=registro2,productos=prod_l)
       
 class Sombras(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Sombras mineral compacta'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("sombras.html",registro=registro2)
+      self.render("sombras.html",registro=registro2,productos=prod_l)
 
 class Rimel(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Mascara para pest'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("rimel.html",registro=registro2)
+      self.render("rimel.html",registro=registro2,productos=prod_l)
         
 class Delineador(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Delineador de ojos'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("delineador.html",registro=registro2)
+      self.render("delineador.html",registro=registro2,productos=prod_l)
 
 class Lapiz(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Lapiz delineador de ojos'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("lapiz.html",registro=registro2)
+      self.render("lapiz.html",registro=registro2,productos=prod_l)
 
 class Mejillas(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Mejillas', ProductosLinea.subcategoria=='Ninguna'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("mejillas.html",registro=registro2)
+      self.render("mejillas.html",registro=registro2,productos=prod_l)
             
 class Reportes(Handler):
     def get(self):
@@ -414,7 +438,7 @@ class producto_linea(Handler):
       productos=ProductosLinea(categoria=categoria,subcategoria=subcategoria,producto=producto)
       #Se guarda la entidad de tipo clientes con propiedades estructuradas
       productos=productos.put()
-
+      self.render("productos.html")
       # logging.info('categoria:  '+str(categoria))
       # logging.info('subcategoria:  '+str(subcategoria))
       # logging.info('producto:  '+str(producto))

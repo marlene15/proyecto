@@ -38,11 +38,10 @@
                         <div class="col-lg-5">
                               <label for="producto">Producto</label>
                               <select class="form-control" id="producto">
-                                    <option>10048389 Black</option>
-                                    <option>10048394 Bronze</option>
-                                    <option>10048392 Dark Denim</option>
-                                    <option>10048390 Deep Brown</option>
-                                </select>
+                                        {%for prod in productos%}
+                                          <option>{{prod.producto}}</option>
+                                        {%endfor%} 
+                              </select>
                         </div>
                         <div class="col-lg-2">
                               <label for="cantidad">Cantidad</label>

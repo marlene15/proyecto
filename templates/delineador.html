@@ -35,9 +35,10 @@
                   <div class="col-lg-5">
                         <label for="producto">Producto</label>
                         <select class="form-control" id="producto">
-                              <option>10017587 Delineador Líquido para Ojos</option>
-                              <option>10071868 Delineador en Gel para Ojos</option>
-                          </select>
+                                        {%for prod in productos%}
+                                          <option>{{prod.producto}}</option>
+                                        {%endfor%} 
+                        </select>
                   </div>
                   <div class="col-lg-2">
                         <label for="cantidad">Cantidad</label>

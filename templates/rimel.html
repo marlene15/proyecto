@@ -35,10 +35,10 @@
                         <div class="col-lg-5">
                               <label for="producto">Producto</label>
                               <select class="form-control" id="producto">
-                                    <option>10017683 Mascara para Pestaña a Prueba de Agua</option>
-                                    <option>10017658 Mascara para pestañas de Máximo Desempeño</option>
-                                    <option>10017658 Mascara para Pestaña Lash Love</option> 
-                                </select>
+                                        {%for prod in productos%}
+                                          <option>{{prod.producto}}</option>
+                                        {%endfor%} 
+                               </select>
                         </div>
                         <div class="col-lg-2">
                               <label for="cantidad">Cantidad</label>
