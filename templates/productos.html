@@ -1,0 +1,87 @@
+{% extends "_base.html" %}
+{% set active_page = "productos" %}
+{% block bodycontent %} 
+      <div class="form-group">
+            <h1>Registrar productos</h1>
+            <div class="form-group">
+                  <form role="form" action="/producto_maquillaje" method="post">
+                        <label for="producto">Maquillaje</label>
+                        <select class="form-control" id="producto" name="maquillaje">
+                              <option>Maquillaje Liquidon Cobertura Media</option>
+                              <option>Maquillaje en Polvo Suelto Mineral</option>
+                              <option>Maquillaje en Polvo Cremoso</option>
+                        </select>
+                        <br/>
+                        <input type="text" class="form-control" name="producto" placeholder="Producto"><br><br>
+                        <div align="right">
+                              <button type="submit" class="btn btn-primary btn-lg" title="Registrar">Registrar <span class='glyphicon glyphicon-plus'></span></button>
+                        </div>
+                  </form>
+            </div>
+            <div class="form-group">
+                  <form role="form" action="/producto_linea" method="post">
+                        <label for="producto">Línea de color</label>
+                        <select class="form-control" id="categoria" onchange="getSub();" name="categoria">
+                              <option value="Labios">Labios</option>
+                              <option value="Ojos">Ojos</option>
+                              <option value="Mejillas">Mejillas</option>
+                        </select>
+                        </br>
+                        <label for="producto">Subcategoría</label>
+                        <select class="form-control" id="sub" name="subcategoria">
+                        </select>                        
+                        <br/>
+                        <input type="text" class="form-control" name="producto" placeholder="Producto"><br><br>
+                        <div align="right">
+                              <button type="submit" class="btn btn-primary btn-lg" title="Registrar">Registrar <span class='glyphicon glyphicon-plus'></span></button>
+                        </div>
+                  </form>
+            </div>            
+      </div>
+{% endblock %}
+
+{%block script%}
+<script type="text/javascript" src="static/jquery.min.js"></script> <!--Para que funcione el select al iniciar la vista de la pagina-->
+<script>
+      var sub = new Array()
+      sub[0] = ["Lapiz labial true dimensions","Brillo labial Nourishine"]
+      sub[1] = ["Corrector para ojos","Sombras mineral compacta","Mascara para pest","Delineador de ojos","Lapiz delineador para ojos"]
+
+      $(document).on('ready',function(){
+            getSub(); //Al iniciar la carga de la vista muestra los resultados dependiendo del que este seleccionado
+      });
+      function getSub()
+      {
+            categoria=$('#categoria').val();            
+            cad="";
+            if (categoria=='Labios') 
+            {
+                  $('#sub').empty();//Limpia el select
+                  for (var i=0;i<sub[0].length;i++)
+                  {
+                        cad="<option value='"+sub[0][i]+"'>"+sub[0][i]+"</option>";                     
+                        $('#sub').append(cad);
+                  }                  
+            };
+            if (categoria=='Ojos') 
+            {
+                  $('#sub').empty();//Limpia el select
+                  for (var i=0;i<sub[1].length;i++)
+                  {
+                        cad="<option value='"+sub[1][i]+"'>"+sub[1][i]+"</option>";
+                        $('#sub').append(cad);
+                  }                  
+            };
+            if (categoria=='Mejillas') 
+            {
+                  $('#sub').empty();//Limpia el select
+                  for (var i=0;i<1;i++)
+                  {
+                        cad="<option value='Ninguna'>Ninguna</option>";
+                        $('#sub').append(cad);
+                  }
+                  
+            };           
+      }
+</script>                  
+{%endblock%}

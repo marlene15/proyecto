@@ -39,12 +39,17 @@
                         <div class="col-lg-5">
                               <label for="producto">Producto</label>
                               <select class="form-control" id="producto">
-                                    <option>10041995 Ivory 100</option>
+                                    {%for prod in productos%}
+                                      {%if prod.categoria == 'MLCM'%}
+                                      <option>{{prod.producto}}</option>
+                                      {%endif%}
+                                    {%endfor%}
+                                    <!-- <option>10041995 Ivory 100</option>
                                     <option>10041998 Ivory 200</option>
                                     <option>10042002 Beige 300</option>
                                     <option>10042003 Beige 302</option>
                                     <option>10042004 Beige 304</option>
-                                    <option>10042006 Beige 400</option>
+                                    <option>10042006 Beige 400</option> -->
                                 </select>
                         </div>
                         <div class="col-lg-2">

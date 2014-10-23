@@ -38,12 +38,15 @@
                         <div class="col-lg-5">
                               <label for="producto">Producto</label>
                               <select class="form-control" id="producto">
-                                    <option>10054822 Coral me Coral</option>
+                                    {%for prod in productos%}
+                                      <option>{{prod.producto}}</option>
+                                    {%endfor%}
+                                    <!-- <option>10054822 Coral me Coral</option>
                                     <option>10054828 Firecracker</option>
                                     <option>10054831 Mystic Plum</option>
                                     <option>10054825 Natural Beauté</option>
                                     <option>10054829 Sizzling Red</option>                         
-                                    <option>10054832 Spice 'n' Nice</option>                     
+                                    <option>10054832 Spice 'n' Nice</option>           -->           
                               </select>
                         </div>
                         <div class="col-lg-2">

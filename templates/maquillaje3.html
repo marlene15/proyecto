@@ -28,7 +28,7 @@
                                     <td class="alert alert-info alert-dismissable">Producto</td>
                                     <td class="alert alert-info alert-dismissable">Cantidad</td>
                                     <td class="alert alert-info alert-dismissable">Precio</td>
-                                    <td class="alert alert-info alert-dismissable">Cliente</td>                                    
+                                    <td class="alert alert-info alert-dismissable">Cliente</td>                                
                                     <td class="alert alert-info alert-dismissable"></td>
                                 </tr>                          
                               </table>
@@ -37,10 +37,15 @@
                               <div class="col-lg-5">
                                     <label for="producto">Producto</label>
                                     <select class="form-control" id="producto">
-                                          <option>10014696 Ivory 1</option>
+                                          {%for prod in productos%}
+                                            {%if prod.categoria == 'MPC'%}
+                                            <option>{{prod.producto}}</option>
+                                            {%endif%}
+                                          {%endfor%}
+                                          <!-- <option>10014696 Ivory 1</option>
                                           <option>10014697 Ivory 2</option>
                                           <option>10014698 Beige 1</option>
-                                          <option>10014701 Beige 3</option>
+                                          <option>10014701 Beige 3</option> -->
                                       </select>
                               </div>
                               <div class="col-lg-2">

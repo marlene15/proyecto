@@ -73,6 +73,15 @@ class LineadecolorM(ndb.Model):
   cliente = ndb.StringProperty()
   precio_total = ndb.StringProperty()
 
+class ProductosMaquillajes(ndb.Model):
+  categoria = ndb.StringProperty()
+  producto = ndb.StringProperty()
+
+class ProductosLinea(ndb.Model):
+  categoria = ndb.StringProperty()
+  subcategoria = ndb.StringProperty()
+  producto = ndb.StringProperty()
+
 class Login(Handler):
     def get(self):
         self.render("loginscreen.html")    
@@ -114,7 +123,12 @@ class Maquillaje1(Handler):
       # logging.info('Clientes: '+str(consulta))
       # registro = []
       # registro = consulta
-      # logging.info('Registro: '+str(registro[1]))
+      saludo = self.request.get('m')
+      logging.info('Saludo: '+str(saludo))
+
+      productos=ProductosMaquillajes.query()
+      prod_m=[]
+      prod_m=productos
 
       consulta=Clientes.query()
       for result in consulta.iter():
@@ -122,27 +136,33 @@ class Maquillaje1(Handler):
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("maquillaje1.html",registro=registro2)
+      self.render("maquillaje1.html",registro=registro2,productos=prod_m)
 
 class Maquillaje2(Handler):
     def get(self):
+      productos=ProductosMaquillajes.query()
+      prod_m=[]
+      prod_m=productos
+
       consulta=Clientes.query()
-      for result in consulta.iter():
-           logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("maquillaje2.html",registro=registro2)
+      self.render("maquillaje2.html",registro=registro2,productos=prod_m)
 
 class Maquillaje3(Handler):
     def get(self):
+      productos=ProductosMaquillajes.query()
+      prod_m=[]
+      prod_m=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("maquillaje3.html",registro=registro2)
+      self.render("maquillaje3.html",registro=registro2,productos=prod_m)
 
 class Lineadecolor(Handler):
     def get(self):
@@ -154,23 +174,31 @@ class Labios(Handler):
 
 class Labial1(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Labios', ProductosLinea.subcategoria=='Lapiz labial true dimensions'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("labial1.html",registro=registro2)
+      self.render("labial1.html",registro=registro2,productos=prod_l)
 
 class Labial2(Handler):
     def get(self):
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Labios', ProductosLinea.subcategoria=='Brillo labial Nourishine'))
+      prod_l=[]
+      prod_l=productos
+
       consulta=Clientes.query()
       for result in consulta.iter():
            logging.info("result:" + str(result))
       registro2=[]
       registro2=consulta
       logging.info("registro2:" + str(registro2))
-      self.render("labial2.html",registro=registro2)
+      self.render("labial2.html",registro=registro2,productos=prod_l)
 
 class Ojos(Handler):
     def get(self):
@@ -246,6 +274,10 @@ class Salir(Handler):
             del self.session['user']
             self.redirect('/')
 
+class Productos(Handler):
+  def get(self):
+        self.render("productos.html")
+
 class Registra(Handler):
   def get(self):
         self.render("registrar.html")
@@ -291,11 +323,6 @@ class Registra_Cliente(Handler):
         email = self.request.get('email')                
         tel = self.request.get('telefono')
 
-        # logging.info('nombre: '+str(nombre))
-        # logging.info('apellidos: '+str(apellidos))
-        # logging.info('email: '+str(email))
-        # logging.info('tel: '+str(tel))
-
         clientes=Clientes(nombre=nombre,
                           apellidos=apellidos,
                           email=email,
@@ -315,7 +342,6 @@ class Agrega_maquillaje(Handler):
       cliente = self.request.get('cliente', allow_multiple=True)
       
       logging.info('Tamanio del array:  '+str(len(cantidades)))
-
       logging.info('Descripcion: '+str(descripcion))
       logging.info('Cantidad en pa posicion 2: '+str(cantidades))
 
@@ -341,10 +367,9 @@ class Agregar_lineadecolor(Handler):
       precios = self.request.get('precios', allow_multiple=True)
       cliente = self.request.get('cliente', allow_multiple=True)
       
-      logging.info('Tamanio del array:  '+str(len(cantidades)))
-
-      logging.info('Descripcion: '+str(descripcion))
-      logging.info('Cantidad en pa posicion 2: '+str(cantidades))
+      # logging.info('Tamanio del array:  '+str(len(cantidades)))
+      # logging.info('Descripcion: '+str(descripcion))
+      # logging.info('Cantidad en pa posicion 2: '+str(cantidades))
 
       #Se coloca el while para agregar todos los datos que se agregaron en la tabla
       indice=0
@@ -358,6 +383,42 @@ class Agregar_lineadecolor(Handler):
         lineadecolorm=lineadecolorm.put()
         indice += 1 
       self.render("lineadecolor.html")
+
+class producto_maquillaje(Handler):
+    def post(self):
+      maquillaje = self.request.get('maquillaje', allow_multiple=True)
+      producto = self.request.get('producto')
+
+      if maquillaje[0] == 'Maquillaje Liquidon Cobertura Media':
+        maquillaje='MLCM'
+      else: 
+        if maquillaje[0] == 'Maquillaje en Polvo Suelto Mineral':
+          maquillaje = 'MPSM'
+        else:
+          if maquillaje[0] == 'Maquillaje en Polvo Cremoso':
+            maquillaje = 'MPC'
+      
+      #Agrega a la base de datos
+      maquillaje=ProductosMaquillajes(categoria=maquillaje,producto=producto)
+      #Se guarda la entidad de tipo clientes con propiedades estructuradas
+      maquillaje=maquillaje.put()
+      self.render("productos.html")
+
+class producto_linea(Handler):
+    def post(self):
+      categoria = self.request.get('categoria')
+      subcategoria = self.request.get('subcategoria')
+      producto = self.request.get('producto')
+
+      #Agrega a la base de datos
+      productos=ProductosLinea(categoria=categoria,subcategoria=subcategoria,producto=producto)
+      #Se guarda la entidad de tipo clientes con propiedades estructuradas
+      productos=productos.put()
+
+      # logging.info('categoria:  '+str(categoria))
+      # logging.info('subcategoria:  '+str(subcategoria))
+      # logging.info('producto:  '+str(producto))
+      # self.render("productos.html")
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -385,9 +446,12 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/reportes',Reportes),
                                ('/salir',Salir),
                                ('/registra',Registra),
+                               ('/productos',Productos),
                                ('/registrar',Registrar),
                                ('/clientes',Registra_Cliente),
                                ('/agrega_maquillaje',Agrega_maquillaje),
-                               ('/agregar_lineadecolor',Agregar_lineadecolor)
+                               ('/agregar_lineadecolor',Agregar_lineadecolor),
+                               ('/producto_maquillaje',producto_maquillaje),
+                               ('/producto_linea',producto_linea)
                               ],
                               debug=True, config=config)
