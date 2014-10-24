@@ -66,6 +66,7 @@ class MaquillajeM(ndb.Model):
   cantidad = ndb.StringProperty()
   cliente = ndb.StringProperty()
   precio_total = ndb.StringProperty()
+  fecha = ndb.DateProperty()
 
 class LineadecolorM(ndb.Model):
   producto = ndb.StringProperty()
@@ -73,6 +74,7 @@ class LineadecolorM(ndb.Model):
   cantidad = ndb.StringProperty()
   cliente = ndb.StringProperty()
   precio_total = ndb.StringProperty()
+  fecha = ndb.DateProperty()
 
 class ProductosMaquillajes(ndb.Model):
   categoria = ndb.StringProperty()
@@ -127,7 +129,7 @@ class Maquillaje1(Handler):
       # registro = []
       # registro = consulta
       saludo = self.request.get('m')
-      logging.info('Saludo: '+str(saludo))
+      logging.info('Saludo: '+str(saludo))      
 
       productos=ProductosMaquillajes.query()
       prod_m=[]
@@ -367,10 +369,10 @@ class Agrega_maquillaje(Handler):
       cantidades = self.request.get('cantidades', allow_multiple=True)
       precios = self.request.get('precios', allow_multiple=True)
       cliente = self.request.get('cliente', allow_multiple=True)
-      
-      logging.info('Tamanio del array:  '+str(len(cantidades)))
-      logging.info('Descripcion: '+str(descripcion))
-      logging.info('Cantidad en pa posicion 2: '+str(cantidades))
+
+      # logging.info('Tamanio del array:  '+str(len(cantidades)))
+      # logging.info('Descripcion: '+str(descripcion))
+      # logging.info('Cantidad en pa posicion 2: '+str(cantidades))
 
       #Se coloca el while para agregar todos los datos que se agregaron en la tabla
       indice=0
@@ -379,7 +381,8 @@ class Agrega_maquillaje(Handler):
                             descripcion=descripcion,
                             cantidad=cantidades[indice],
                             cliente=cliente[indice],
-                            precio_total=precios[indice])
+                            precio_total=precios[indice],
+                            fecha=datetime.date.today())
         #Se guarda la entidad de tipo clientes con propiedades estructuradas
         maquillajem=maquillajem.put()
         indice += 1 
@@ -405,7 +408,8 @@ class Agregar_lineadecolor(Handler):
                             descripcion=descripcion,
                             cantidad=cantidades[indice],
                             cliente=cliente[indice],
-                            precio_total=precios[indice])
+                            precio_total=precios[indice],
+                            fecha=datetime.date.today())
         #Se guarda la entidad de tipo clientes con propiedades estructuradas
         lineadecolorm=lineadecolorm.put()
         indice += 1 
