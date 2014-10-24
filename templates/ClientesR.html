@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+{% set active_page = "articulosM2" %}
+{% block bodycontent %}
+<html lang="es">
+<head>
+      <title>Reporte de Venta por Cliente</title>
+</head>
+<body>  
+      <div class="form-group">
+            <h1>Reporte de Ventas por Clientes</h1>
+            <center>
+              <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+                <tr>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Nombre</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Email</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Teléfono</strong></center></td>                  
+                  <td class="alert alert-info alert-dismissable"><center><strong>Dirección</strong></center></td>
+                </tr>
+                {%for clientes in clientes%}
+                <tr>
+                  <td class="alert alert-info alert-dismissable">{{clientes.nombre}} {{clientes.apellidos}}</td>
+                  <td class="alert alert-info alert-dismissable">{{clientes.email}}</td>
+                  <td class="alert alert-info alert-dismissable">{{clientes.tel}}</td>                  
+                  <td class="alert alert-info alert-dismissable">{{clientes.dire}}</td>                  
+                </tr> 
+                {%endfor%}
+              </table>
+            </center>
+      </div>
+</body>
+</html>
+{% endblock %}

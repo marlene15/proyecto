@@ -48,7 +48,7 @@
                       <label for="cliente">Cliente</label>
                       <select class="form-control" id="cliente">
                           {%for registros in registro%}
-                          <option>{{registros.nombre}}</option>
+                          <option>{{registros.nombre}} {{registros.apellidos}}</option>
                           {%endfor%}
                       </select>
                   </div>                  

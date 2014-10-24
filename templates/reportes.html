@@ -9,11 +9,18 @@
 			<select class="form-control" name="reporte">
 			  <option value="1">Catálogo de artículos</option>
 			  <option value="2">Artículos vendidos</option>
-			  <option value="3">Entradas, salida, ajustes y devoluciones de unidades</option>
-			  <option value="4">Reportes por cliente</option>
+			  <option value="3">Clientes Registrados</option>
+			  <option value="4">Reportes de Ventas por cliente</option>
 			  <option value="5">Listado de ganancias</option>
 			</select>
 			<br/>
+			<label for="cliente">Cliente</label>
+			<select class="form-control" id="cliente" name="cliente">
+                {%for clientes in clientes%}
+                   	<option>{{clientes.nombre}} {{clientes.apellidos}}</option>
+                {%endfor%}
+            </select>
+            <br/>
 			<label for="nivel">Selecciona categoría: </label>
 			<select class="form-control" name="categoria">
 			  <option value="1">Maquillaje</option>

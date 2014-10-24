@@ -59,6 +59,7 @@ class Clientes(ndb.Model):
   apellidos = ndb.StringProperty()
   email = ndb.StringProperty()
   tel = ndb.StringProperty()
+  dire = ndb.StringProperty()
 
 class MaquillajeM(ndb.Model):
   producto = ndb.StringProperty()
@@ -295,7 +296,10 @@ class Mejillas(Handler):
             
 class Reportes(Handler):
     def get(self):
-      self.render("reportes.html")
+      clientes=Clientes.query()  
+      clie_l=[]
+      clie_l=clientes
+      self.render("reportes.html", clientes=clie_l)
 
 class Salir(Handler):
     def get(self):
@@ -351,11 +355,13 @@ class Registra_Cliente(Handler):
         apellidos = self.request.get('apellidos')
         email = self.request.get('email')                
         tel = self.request.get('telefono')
+        dire = self.request.get('direccion')
 
         clientes=Clientes(nombre=nombre,
                           apellidos=apellidos,
                           email=email,
-                          tel=tel)
+                          tel=tel,
+                          dire=dire)
         #Se guarda la entidad de tipo clientes con propiedades estructuradas
         clientes=clientes.put()
         #Obtengo la llave de la entidad de clientes
@@ -491,6 +497,7 @@ class genera_reporte(Handler):
   def post(self):
     categoria = self.request.get('categoria')
     reporte = self.request.get('reporte')
+    cliente = self.request.get('cliente')
     today = datetime.date.today()
 
     if reporte == '1' and categoria == '1':
@@ -515,8 +522,29 @@ class genera_reporte(Handler):
        productos=LineadecolorM.query()  
        prod_l=[]
        prod_l=productos
-       self.render("articulosL2.html", productos=prod_l)       
+       self.render("articulosL2.html", productos=prod_l)
 
+    if reporte == '3':
+       clientes=Clientes.query()  
+       clie_l=[]
+       clie_l=clientes
+       self.render("ClientesR.html", clientes=clie_l)       
+
+    if reporte == '4' and categoria =='1':
+      cliente=MaquillajeM.query(MaquillajeM.cliente==cliente)
+      #cliente=MaquillajeM.query(ndb.AND(MaquillajeM.cliente==cliente))
+      ventas=[]
+      ventas=cliente
+      self.render("ventaclienteM.html", cliente=ventas)
+
+    if reporte == '4' and categoria =='2':
+      cliente=LineadecolorM.query(LineadecolorM.cliente==cliente)
+      #cliente=MaquillajeM.query(ndb.AND(MaquillajeM.cliente==cliente))
+      ventas=[]
+      ventas=cliente
+      self.render("ventaclienteL.html", cliente=ventas)  
+    
+    logging.info('cliente:  '+str(cliente))      
     logging.info('categoria:  '+str(categoria))
     logging.info('reporte:  '+str(reporte))
     logging.info('fecha: '+str(today))

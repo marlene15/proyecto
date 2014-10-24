@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+{% set active_page = "ventaclienteL" %}
+{% block bodycontent %}
+<html lang="es">
+<head>
+      <title>Reporte de Linea de Color Vendidos por Cliente</title>
+</head>
+<body>  
+      <div class="form-group">
+            <h1>Reporte de Linea de Color Vendidos por Cliente</h1>
+            <center>
+              <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+                <tr>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Categoría</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Producto</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Cantidad</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Precios</strong></center></td>
+                </tr>
+                {%for cliente in cliente%}
+                <tr>
+                  <td class="alert alert-info alert-dismissable">{{cliente.descripcion}}</td>
+                  <td class="alert alert-info alert-dismissable">{{cliente.producto}}</td>
+                  <td class="alert alert-info alert-dismissable">{{cliente.cantidad}}</td>
+                  <td class="alert alert-info alert-dismissable">{{cliente.precio_total}}</td>
+
+                </tr>
+                {%endfor%}
+              </table>                 
+            </center>
+      </div>
+</body>
+</html>
+{% endblock %}
