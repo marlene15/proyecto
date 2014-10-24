@@ -1,25 +1,27 @@
 {% extends "_base.html" %}
-{% set active_page = "articulosM" %}
+{% set active_page = "articulosM2" %}
 {% block bodycontent %}
 <html lang="es">
 <head>
-      <title>Reporte Artículos</title>
+      <title>Reporte Artículos Vendidos</title>
 </head>
 <body>  
       <div class="form-group">
-            <h1>Reporte de maquillajes</h1>
+            <h1>Reporte de Maquillajes Vendidos</h1>
             <center>
               <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
                 <tr>
                   <td class="alert alert-info alert-dismissable"><center><strong>Categoría</strong></center></td>
                   <td class="alert alert-info alert-dismissable"><center><strong>Producto</strong></center></td>
                   <td class="alert alert-info alert-dismissable"><center><strong>Precio</strong></center></td>                  
+                  <td class="alert alert-info alert-dismissable"><center><strong>Cantidad</strong></center></td>
                 </tr>
                 {%for productos in productos%}
                 <tr>
-                  <td class="alert alert-info alert-dismissable">{{productos.categoria}}</td>
+                  <td class="alert alert-info alert-dismissable">{{productos.descripcion}}</td>
                   <td class="alert alert-info alert-dismissable">{{productos.producto}}</td>
-                  <td class="alert alert-info alert-dismissable">{{productos.precios}}</td>                  
+                  <td class="alert alert-info alert-dismissable">{{productos.precio_total}}</td>                  
+                  <td class="alert alert-info alert-dismissable">{{productos.cantidad}}</td>                  
                 </tr> 
                 {%endfor%}
               </table>

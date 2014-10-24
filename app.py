@@ -2,6 +2,7 @@ import os
 import webapp2
 import jinja2
 import logging
+import datetime
 
 from google.appengine.ext import db
 from google.appengine.ext import ndb #Importa para usar la base de datos NDB
@@ -76,11 +77,13 @@ class LineadecolorM(ndb.Model):
 class ProductosMaquillajes(ndb.Model):
   categoria = ndb.StringProperty()
   producto = ndb.StringProperty()
+  precios = ndb.StringProperty()
 
 class ProductosLinea(ndb.Model):
   categoria = ndb.StringProperty()
   subcategoria = ndb.StringProperty()
   producto = ndb.StringProperty()
+  precios = ndb.StringProperty()
 
 class Login(Handler):
     def get(self):
@@ -408,10 +411,12 @@ class Agregar_lineadecolor(Handler):
         indice += 1 
       self.render("lineadecolor.html")
 
+#REPORTE CATALOGO DE ARTICULOS
 class producto_maquillaje(Handler):
     def post(self):
       maquillaje = self.request.get('maquillaje', allow_multiple=True)
       producto = self.request.get('producto')
+      precios = self.request.get('precios')
 
       if maquillaje[0] == 'Maquillaje Liquidon Cobertura Media':
         maquillaje='MLCM'
@@ -423,7 +428,7 @@ class producto_maquillaje(Handler):
             maquillaje = 'MPC'
       
       #Agrega a la base de datos
-      maquillaje=ProductosMaquillajes(categoria=maquillaje,producto=producto)
+      maquillaje=ProductosMaquillajes(categoria=maquillaje,producto=producto, precios=precios)
       #Se guarda la entidad de tipo clientes con propiedades estructuradas
       maquillaje=maquillaje.put()
       self.render("productos.html")
@@ -433,9 +438,9 @@ class producto_linea(Handler):
       categoria = self.request.get('categoria')
       subcategoria = self.request.get('subcategoria')
       producto = self.request.get('producto')
-
+      precios = self.request.get('precios')
       #Agrega a la base de datos
-      productos=ProductosLinea(categoria=categoria,subcategoria=subcategoria,producto=producto)
+      productos=ProductosLinea(categoria=categoria,subcategoria=subcategoria,producto=producto, precios=precios)
       #Se guarda la entidad de tipo clientes con propiedades estructuradas
       productos=productos.put()
       self.render("productos.html")
@@ -444,10 +449,45 @@ class producto_linea(Handler):
       # logging.info('producto:  '+str(producto))
       # self.render("productos.html")
 
+#REPORTE DE ARTICULOS VENDIDOS
+class producto_maquillajev(Handler):
+    def post(self):
+      maquillaje = self.request.get('maquillaje', allow_multiple=True)
+      producto = self.request.get('producto')
+      precios = self.request.get('precios')
+
+      if maquillaje[0] == 'Maquillaje Liquidon Cobertura Media':
+        maquillaje='MLCM'
+      else: 
+        if maquillaje[0] == 'Maquillaje en Polvo Suelto Mineral':
+          maquillaje = 'MPSM'
+        else:
+          if maquillaje[0] == 'Maquillaje en Polvo Cremoso':
+            maquillaje = 'MPC'
+      
+      #Agrega a la base de datos
+      maquillaje=MaquillajeM(categoria=maquillaje,producto=producto, precios=precios)
+      #Se guarda la entidad de tipo clientes con propiedades estructuradas
+      maquillaje=maquillaje.put()
+      self.render("productos.html")
+
+class producto_lineav(Handler):
+    def post(self):
+      categoria = self.request.get('categoria')
+      subcategoria = self.request.get('subcategoria')
+      producto = self.request.get('producto')
+      precios = self.request.get('precios')
+      #Agrega a la base de datos
+      productos=LineadecolorM(categoria=categoria,subcategoria=subcategoria,producto=producto, precios=precios)
+      #Se guarda la entidad de tipo clientes con propiedades estructuradas
+      productos=productos.put()
+      self.render("productos.html")
+
 class genera_reporte(Handler):
   def post(self):
     categoria = self.request.get('categoria')
     reporte = self.request.get('reporte')
+    today = datetime.date.today()
 
     if reporte == '1' and categoria == '1':
        productos=ProductosMaquillajes.query()  
@@ -461,8 +501,22 @@ class genera_reporte(Handler):
        prod_l=productos
        self.render("articulosL.html", productos=prod_l)
 
+    if reporte == '2' and categoria == '1':
+       productos=MaquillajeM.query()  
+       prod_l=[]
+       prod_l=productos
+       self.render("articulosM2.html", productos=prod_l)   
+
+    if reporte == '2' and categoria == '2':
+       productos=LineadecolorM.query()  
+       prod_l=[]
+       prod_l=productos
+       self.render("articulosL2.html", productos=prod_l)       
+
     logging.info('categoria:  '+str(categoria))
     logging.info('reporte:  '+str(reporte))
+    logging.info('fecha: '+str(today))
+
     #self.render("reportes.html")
 
 config = {}
@@ -498,6 +552,8 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/agregar_lineadecolor',Agregar_lineadecolor),
                                ('/producto_maquillaje',producto_maquillaje),
                                ('/producto_linea',producto_linea),
+                               ('/producto_maquillajev',producto_maquillajev),
+                               ('/producto_lineav',producto_lineav),
                                ('/genera_reporte',genera_reporte)
                               ],
                               debug=True, config=config)
