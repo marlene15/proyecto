@@ -444,6 +444,27 @@ class producto_linea(Handler):
       # logging.info('producto:  '+str(producto))
       # self.render("productos.html")
 
+class genera_reporte(Handler):
+  def post(self):
+    categoria = self.request.get('categoria')
+    reporte = self.request.get('reporte')
+
+    if reporte == '1' and categoria == '1':
+       productos=ProductosMaquillajes.query()  
+       prod_l=[]
+       prod_l=productos
+       self.render("articulosM.html", productos=prod_l)
+
+    if reporte == '1' and categoria == '2':
+       productos=ProductosLinea.query()  
+       prod_l=[]
+       prod_l=productos
+       self.render("articulosL.html", productos=prod_l)
+
+    logging.info('categoria:  '+str(categoria))
+    logging.info('reporte:  '+str(reporte))
+    #self.render("reportes.html")
+
 config = {}
 config['webapp2_extras.sessions'] = {
   'secret_key': 'some-secret-key',
@@ -476,6 +497,7 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/agrega_maquillaje',Agrega_maquillaje),
                                ('/agregar_lineadecolor',Agregar_lineadecolor),
                                ('/producto_maquillaje',producto_maquillaje),
-                               ('/producto_linea',producto_linea)
+                               ('/producto_linea',producto_linea),
+                               ('/genera_reporte',genera_reporte)
                               ],
                               debug=True, config=config)

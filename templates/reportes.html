@@ -4,20 +4,20 @@
 {% block bodycontent %} <!--Inicio del contenido del archivo-->
     <h2><center>Reportes</center></h2>     	
   	<div class="form-group">	
-      	<form role="form">      	
+      	<form role="form" action="/genera_reporte" method="post">      	
 			<label for="nivel">Seleccionar reporte: </label>
-			<select class="form-control" name="nivel">
-			  <option>Catálogo de artículos</option>
-			  <option>Artículos vendidos</option>
-			  <option>Entradas, salida, ajustes y devoluciones de unidades</option>
-			  <option>Reportes por cliente</option>
-			  <option>Listado de ganancias</option>
+			<select class="form-control" name="reporte">
+			  <option value="1">Catálogo de artículos</option>
+			  <option value="2">Artículos vendidos</option>
+			  <option value="3">Entradas, salida, ajustes y devoluciones de unidades</option>
+			  <option value="4">Reportes por cliente</option>
+			  <option value="5">Listado de ganancias</option>
 			</select>
 			<br/>
 			<label for="nivel">Selecciona categoría: </label>
-			<select class="form-control" name="nivel">
-			  <option>Maquillaje</option>
-			  <option>Línea de color</option>
+			<select class="form-control" name="categoria">
+			  <option value="1">Maquillaje</option>
+			  <option value="2">Línea de color</option>
 			</select>
 			<br/>
 			<label for="fecha">Fecha de inicio: </label>
