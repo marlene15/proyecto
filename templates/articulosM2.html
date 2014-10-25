@@ -13,15 +13,16 @@
                 <tr>
                   <td class="alert alert-info alert-dismissable"><center><strong>Categoría</strong></center></td>
                   <td class="alert alert-info alert-dismissable"><center><strong>Producto</strong></center></td>
-                  <td class="alert alert-info alert-dismissable"><center><strong>Precio</strong></center></td>                  
                   <td class="alert alert-info alert-dismissable"><center><strong>Cantidad</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Precio Total</strong></center></td>             
+                  
                 </tr>
                 {%for productos in productos%}
                 <tr>
                   <td class="alert alert-info alert-dismissable">{{productos.descripcion}}</td>
                   <td class="alert alert-info alert-dismissable">{{productos.producto}}</td>
-                  <td class="alert alert-info alert-dismissable">{{productos.precio_total}}</td>                  
-                  <td class="alert alert-info alert-dismissable">{{productos.cantidad}}</td>                  
+                  <td class="alert alert-info alert-dismissable">{{productos.cantidad}}</td>
+                  <td class="alert alert-info alert-dismissable">{{productos.precio_total}}</td>                           
                 </tr> 
                 {%endfor%}
               </table>

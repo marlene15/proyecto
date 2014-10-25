@@ -1,0 +1,60 @@
+{% extends "_base.html" %}
+{% set active_page = "ventas_totales" %}
+{% block bodycontent %}
+<html lang="es">
+<head>
+      <title>Reporte Artículos Vendidos</title>
+</head>
+<body>  
+      <div class="form-group">
+            <h1>Reporte de todas las ventas</h1>
+            <center>
+              <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+                <tr>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Descripcion</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Producto</strong></center></td>           
+                  <td class="alert alert-info alert-dismissable"><center><strong>Cliente</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Cantidad</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Precio Total</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Fecha</strong></center></td>
+                </tr>
+                {%for ventas1 in ventas1%}
+                <tr>
+                  <td class="alert alert-info alert-dismissable">{{ventas1.descripcion}}</td>
+                  <td class="alert alert-info alert-dismissable">{{ventas1.producto}}</td>
+                  <td class="alert alert-info alert-dismissable">{{ventas1.cliente}}</td>
+                  <td class="alert alert-info alert-dismissable">{{ventas1.cantidad}}</td>  
+                  <td class="alert alert-info alert-dismissable">{{ventas1.precio_total}}</td>  
+                  <td class="alert alert-info alert-dismissable">{{ventas1.fecha}}</td>                  
+                </tr>
+                {%endfor%}
+
+                {%for ventas2 in ventas2%}
+                <tr>
+                  <td class="alert alert-info alert-dismissable">{{ventas2.descripcion}}</td>
+                  <td class="alert alert-info alert-dismissable">{{ventas2.producto}}</td>
+                  <td class="alert alert-info alert-dismissable">{{ventas2.cliente}}</td>
+                  <td class="alert alert-info alert-dismissable">{{ventas2.cantidad}}</td>  
+                  <td class="alert alert-info alert-dismissable">{{ventas2.precio_total}}</td>  
+                  <td class="alert alert-info alert-dismissable">{{ventas2.fecha}}</td>                  
+                </tr>
+                {%endfor%}
+              </table>                 
+            </center>
+            <br/>
+            <div class="panel panel-primary"> 
+              <div class="panel-heading">
+                <center>
+                  <h3 class="panel-title"><strong>GANANCIAS</strong></h3>
+                </center>
+              </div>
+              <div class="panel-body">
+                <center>
+                  <p>${{ganancias}}.00 pesos</p>
+                </center>
+              </div>
+            </div> 
+      </div>
+</body>
+</html>
+{% endblock %}

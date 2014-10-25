@@ -14,7 +14,8 @@
                   <td class="alert alert-info alert-dismissable"><center><strong>Categoría</strong></center></td>
                   <td class="alert alert-info alert-dismissable"><center><strong>Producto</strong></center></td>
                   <td class="alert alert-info alert-dismissable"><center><strong>Cantidad</strong></center></td>
-                  <td class="alert alert-info alert-dismissable"><center><strong>Precios</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Precio Total</strong></center></td>
+                  <td class="alert alert-info alert-dismissable"><center><strong>Fecha</strong></center></td>
                 </tr>
                 {%for cliente in cliente%}
                 <tr>
@@ -22,7 +23,7 @@
                   <td class="alert alert-info alert-dismissable">{{cliente.producto}}</td>
                   <td class="alert alert-info alert-dismissable">{{cliente.cantidad}}</td>
                   <td class="alert alert-info alert-dismissable">{{cliente.precio_total}}</td>
-
+                  <td class="alert alert-info alert-dismissable">{{cliente.fecha}}</td>
                 </tr>
                 {%endfor%}
               </table>                 

@@ -16,13 +16,13 @@
             <div id="triangle"></div>
             <h1>Registrar</h1>
             <form role="form" action="/registrar" method="post">
-                  <input type="text" class="form-control" name="nombre" placeholder="Nombre"><br><br>
-                  <input type="text" class="form-control" name="apellido" placeholder="Apellido"><br><br>
-                  <input type="text" class="form-control" name="email" placeholder="email"><br><br>                
-                  <input type="text" class="form-control" name="user" placeholder="Usuario"><br><br>
-                  <input type="password" class="form-control" name="password" placeholder="Password"><br><br>
+                  <input type="text" class="form-control" name="nombre" placeholder="Nombre" required pattern="[a-zA-Z\s]*$"><br><br>
+                  <input type="text" class="form-control" name="apellido" placeholder="Apellido" required pattern="[a-zA-Z\s]*$"><br><br>
+                  <input type="email" class="form-control" name="email" placeholder="email" required><br><br>               
+                  <input type="text" class="form-control" name="user" placeholder="Usuario" required><br><br>
+                  <input type="password" class="form-control" name="password" placeholder="Password" required><br><br>
                   <!--<input type="text" class="form-control" name="fecha" placeholder="01/09/1992"><br><br>-->
-                  <input type="text" class="form-control" name="sexo" placeholder="sexo"><br><br>
+                  <input type="text" class="form-control" name="sexo" placeholder="sexo" required pattern="[a-zA-Z\s]*$"><br><br>
                   <input type="submit" value="Registrar">
             </form>
       </div>

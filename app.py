@@ -497,8 +497,7 @@ class genera_reporte(Handler):
   def post(self):
     categoria = self.request.get('categoria')
     reporte = self.request.get('reporte')
-    cliente = self.request.get('cliente')
-    today = datetime.date.today()
+    cliente = self.request.get('clientes')
 
     if reporte == '1' and categoria == '1':
        productos=ProductosMaquillajes.query()  
@@ -532,31 +531,36 @@ class genera_reporte(Handler):
 
     if reporte == '4' and categoria =='1':
       cliente=MaquillajeM.query(MaquillajeM.cliente==cliente)
-      #cliente=MaquillajeM.query(ndb.AND(MaquillajeM.cliente==cliente))
       ventas=[]
       ventas=cliente
       self.render("ventaclienteM.html", cliente=ventas)
 
     if reporte == '4' and categoria =='2':
       cliente=LineadecolorM.query(LineadecolorM.cliente==cliente)
-      #cliente=MaquillajeM.query(ndb.AND(MaquillajeM.cliente==cliente))
       ventas=[]
       ventas=cliente
       self.render("ventaclienteL.html", cliente=ventas)  
-    
-    logging.info('cliente:  '+str(cliente))      
-    logging.info('categoria:  '+str(categoria))
-    logging.info('reporte:  '+str(reporte))
-    logging.info('fecha: '+str(today))
 
-    #self.render("reportes.html")
+    cantidad_totalM=0
+    cantidad_totalL=0
+    if reporte == '5':
+      ventasM=MaquillajeM.query()    
+      ventasL=LineadecolorM.query()
+      ventas1=[]
+      ventas2=[]
+      ventas1=ventasM
+      ventas2=ventasL
 
+      for result1 in ventasM.iter():
+        cantidad_totalM=cantidad_totalM+int(result1.precio_total)
+      for result2 in ventasL.iter():
+        cantidad_totalL=cantidad_totalL+int(result2.precio_total)
+      ganancias=cantidad_totalM+cantidad_totalL
+      self.render("ventas_totales.html", ventas1=ventas1,ventas2=ventas2,ganancias=ganancias) 
 config = {}
 config['webapp2_extras.sessions'] = {
   'secret_key': 'some-secret-key',
-}
-
-    
+}    
 app = webapp2.WSGIApplication([('/', Login),
                                ('/index', Index),                               
                                ('/maquillaje',Maquillaje),
