@@ -3,12 +3,14 @@ import webapp2
 import jinja2
 import logging
 import datetime
+import Crypto
 
 from google.appengine.ext import db
 from google.appengine.ext import ndb #Importa para usar la base de datos NDB
 from webapp2_extras import sessions
 import re #para expresiones regulares
 from google.appengine.api import mail
+from Crypto.Hash import SHA256 #encriptar contrasenia
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -93,7 +95,9 @@ class Login(Handler):
         self.render("loginscreen.html")    
     def post(self):
       user = self.request.get("user")
-      pw = self.request.get('password')          
+      pw = self.request.get('password')    
+      pw = SHA256.new(pw).hexdigest()   
+      #logging.info('pw'+str(pw))   
       msg = ' '
       if pw == '' or user == '':
         msg = 'Por favor especifique el usuario y la contrasena'
@@ -322,6 +326,8 @@ class Registrar(Handler):
         email = self.request.get('email')                
         user = self.request.get('user')
         pw = self.request.get('password')
+        pw = SHA256.new(pw).hexdigest()
+        #logging.info("pw:" + str(pw))
         #fecha = self.request.get('fecha')
         sexo = self.request.get('sexo')
 
