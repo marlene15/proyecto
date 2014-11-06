@@ -16,13 +16,11 @@ handlers:
   
 - url: /.*
   script: app.app
-
-# - url: /_ah/mail/.+
-#   script: handle_incoming_email.app
+  secure: always #Configuracion de seguridad HTTPS
 
 libraries:
 - name: jinja2
   version: latest
-- name: pycrypto
+- name: pycrypto #Encriptado de las contrasenias
   version: "2.6"
 
