@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+{% set active_page = "calendar" %}
+{% block bodycontent %}
+<html lang="es">
+<head>
+      <title>Lista de eventos</title>
+</head>
+<body>
+  <div class="form-group">
+      <h1>Lista de Eventos</h1>
+      <!-- {{response}} -->
+      <table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+        <tr>
+          <td class="alert alert-info alert-dismissable"><center><strong>Fecha y hora</strong></center></td>
+          <td class="alert alert-info alert-dismissable"><center><strong>Evento</strong></center></td>
+          <td class="alert alert-info alert-dismissable"><center><strong>Descripción</strong></center></td>
+          <td class="alert alert-info alert-dismissable"><center><strong>Lugar</strong></center></td>          
+        </tr>
+        {%for response in response%}
+          {%if response.summary %}
+          <tr>
+            <td class="alert alert-info alert-dismissable">{{response.updated}}</td>
+            <td class="alert alert-info alert-dismissable">{{response.summary}}</td>
+            <td class="alert alert-info alert-dismissable">{{response.description}}</td>
+            <td class="alert alert-info alert-dismissable">{{response.location}}</td>          
+          </tr>
+          {% endif %}
+        {%endfor%}
+        </table> 
+  </div>
+</body>
+</html>
+{% endblock %}

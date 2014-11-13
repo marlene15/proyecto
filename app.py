@@ -12,6 +12,10 @@ import re #para expresiones regulares
 from google.appengine.api import mail
 from Crypto.Hash import SHA256 #encriptar contrasenia
 
+#uso de OAuth
+from apiclient.discovery import build
+from oauth2client.appengine import OAuth2Decorator
+
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                autoescape = True)
@@ -563,6 +567,28 @@ class genera_reporte(Handler):
         cantidad_totalL=cantidad_totalL+int(result2.precio_total)
       ganancias=cantidad_totalM+cantidad_totalL
       self.render("ventas_totales.html", ventas1=ventas1,ventas2=ventas2,ganancias=ganancias) 
+
+#---------------------OAuth2Decorator-------------------------------
+decorator = OAuth2Decorator(
+    client_id ='38744844939-31gg4resp8aqnkn9kkj7vm52pp9kv5bf.apps.googleusercontent.com',
+    client_secret='aZT5bhCqKZY9Kwpai3zriojo',
+    scope='https://www.googleapis.com/auth/calendar')
+service = build('calendar','v3')   
+
+class calendar(Handler):
+  @decorator.oauth_required
+  def get(self):
+        items=[] 
+        page_token = None
+        while True:
+          events = service.events().list(calendarId='primary', pageToken=page_token).execute(http=decorator.http())
+          for event in events['items']:
+            items = events.get('items',[])
+          page_token = events.get('nextPageToken')
+          if not page_token:
+            break       
+        self.render("calendar.html", response=items)
+
 config = {}
 config['webapp2_extras.sessions'] = {
   'secret_key': 'some-secret-key',
@@ -596,6 +622,8 @@ app = webapp2.WSGIApplication([('/', Login),
                                ('/producto_linea',producto_linea),
                                ('/producto_maquillajev',producto_maquillajev),
                                ('/producto_lineav',producto_lineav),
-                               ('/genera_reporte',genera_reporte)
+                               ('/genera_reporte',genera_reporte),
+                               ('/calendar',calendar),
+                               (decorator.callback_path, decorator.callback_handler())
                               ],
                               debug=True, config=config)
