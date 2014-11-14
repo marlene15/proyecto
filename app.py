@@ -348,7 +348,7 @@ class Registrar(Handler):
           #Obtengo la llave de la entidad de usuario
           usuariokey=usuario.get()          
           
-          sender_address = "10460292@itcolima.edu.mx"
+          sender_address = "sn.equipo1@gmail.com"
           subject = "Registro completo"
           body = "Gracias por registrarse"
           mail.send_mail(sender_address,email, subject, body)
