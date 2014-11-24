@@ -24,3 +24,6 @@ libraries:
 - name: pycrypto #Encriptado de las contrasenias
   version: "2.6"
 
+builtins:      #Para ver las estadisticas del trafico de la pagina 
+- appstats: on
+
