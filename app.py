@@ -367,8 +367,8 @@ class Registra_Cliente(Handler):
         tel = self.request.get('telefono')
         dire = self.request.get('direccion')
 
-        clientes=Clientes(nombre=nombre,
-                          apellidos=apellidos,
+        clientes=Clientes(nombre=nombre.lower(), #Guarda en minuscula
+                          apellidos=apellidos.lower(),
                           email=email,
                           tel=tel,
                           dire=dire)
@@ -508,6 +508,7 @@ class genera_reporte(Handler):
     categoria = self.request.get('categoria')
     reporte = self.request.get('reporte')
     cliente = self.request.get('clientes')
+    logging.info('cliente:  '+str(cliente))
 
     if reporte == '1' and categoria == '1':
        productos=ProductosMaquillajes.query()  
