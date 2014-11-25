@@ -276,7 +276,7 @@ class Delineador(Handler):
 
 class Lapiz(Handler):
     def get(self):
-      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Lapiz delineador de ojos'))
+      productos=ProductosLinea.query(ndb.AND(ProductosLinea.categoria=='Ojos', ProductosLinea.subcategoria=='Lapiz delineador para ojos'))
       prod_l=[]
       prod_l=productos
 
