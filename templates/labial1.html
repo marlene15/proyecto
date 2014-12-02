@@ -14,7 +14,7 @@
                   <p>ayudar a lucir unos labios con mayor volumen.</p>
                   <br/>
                   
-            <form role="form" action="/agregar_lineadecolor" method="post">
+            <form role="form" action="/agregar_lineadecolor" method="post" onSubmit="return validaNuevo(this);">
                   <input type="hidden" name="descripcion" value="Labial True Dimensions" id="descripcion">
                   <div class="panel panel-primary"> 
                         <div class="panel-heading">
@@ -75,7 +75,7 @@
                   <img src="/public/img/Lineadecolor/Labiales/LL1/L6.png"/>
                   
                   <div align="right">
-                        <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
+                        <button type="submit" class="btn btn-primary btn-lg" title="Guardar" >Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
                         <button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'">Cancelar <span class='glyphicon glyphicon-remove-circle'></span></button>
                   </div>
             </form>     
@@ -112,5 +112,23 @@
                   {
                         $(boton).parent().parent().remove();
                   }
+                  
+                  function validaNuevo (form) 
+                  {
+                        // VARIABLES
+                        // Variable para controlar si los campos estaban cumplimentados
+                     r=1;
+                     if ($('#tabla >tbody >tr').length == 1)
+                     {
+                      r=0;
+                     };                                     
+
+                      // RETORNAR AL ENVÍO
+                      // Si ha hay campos sin cubrir, interrumpimos el envío -return false-
+                      if (r==0) { alert("No hay registros que agregar"); return false; }
+                      // Si todo está bien, te dispones a enviar el contenido del formulario al script php, -return true-
+                      // Además, alertas al usuario para que no pulse mas veces, aún así, la gente, no se cansa.
+                      else { alert("Venta guardada correctamente"); return true; }
+                  } 
             </script>               
 {%endblock%} 

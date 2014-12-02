@@ -435,8 +435,8 @@ class Agregar_lineadecolor(Handler):
 class producto_maquillaje(Handler):
     def post(self):
       maquillaje = self.request.get('maquillaje', allow_multiple=True)
-      producto = self.request.get('producto')
-      precios = self.request.get('precios')
+      producto = self.request.get('producto1')
+      precios = self.request.get('precios1')
 
       if maquillaje[0] == 'Maquillaje Liquidon Cobertura Media':
         maquillaje='MLCM'
@@ -457,8 +457,8 @@ class producto_linea(Handler):
     def post(self):
       categoria = self.request.get('categoria')
       subcategoria = self.request.get('subcategoria')
-      producto = self.request.get('producto')
-      precios = self.request.get('precios')
+      producto = self.request.get('producto2')
+      precios = self.request.get('precios2')
       #Agrega a la base de datos
       productos=ProductosLinea(categoria=categoria,subcategoria=subcategoria,producto=producto, precios=precios)
       #Se guarda la entidad de tipo clientes con propiedades estructuradas

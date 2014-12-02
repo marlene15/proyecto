@@ -10,12 +10,12 @@
             <h1>Registrar Cliente</h1>
             <center>
                   <div id="agrupa">
-                        <form role="form" action="/clientes" method="post">
-                              <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)" required pattern="[a-zA-Z\s]*$"><br><br>
-                              <input type="text" class="form-control" name="apellidos" placeholder="Apellidos" required pattern="[a-zA-Z\s]*$"><br><br>
+                        <form role="form" action="/clientes" method="post" onSubmit="return validaNuevo(this);">
+                              <input type="text" class="form-control" name="nombre" placeholder="Nombre(s)"><br><br>
+                              <input type="text" class="form-control" name="apellidos" placeholder="Apellidos" ><br><br>
                               <input type="email" class="form-control" name="email" placeholder="Email"><br><br>             
-                              <input type="text" class="form-control" name="telefono" placeholder="Tel." required pattern="[0-9]*"><br><br>
-                              <input type="text" class="form-control" name="direccion" placeholder="Dirección" required pattern="[a-zA-Z0-9\s]*$"><br><br>
+                              <input type="text" class="form-control" name="telefono" placeholder="Tel."><br><br>
+                              <input type="text" class="form-control" name="direccion" placeholder="Dirección"><br><br>
                               <div align="right">
                                     <button type="submit" class="btn btn-primary btn-lg" title="Registrar">Registrar <span class='glyphicon glyphicon-plus'></span></button>
                               </div>
@@ -26,3 +26,77 @@
 </body>
 </html>
 {% endblock %}
+
+{%block script%}
+            <script>
+                  function validaNuevo (form) 
+                  {
+                        // VARIABLES
+                        // Variable para controlar si los campos estaban cumplimentados
+                      r=1;
+                      var nombre=form.nombre.value;
+                      var apellidos=form.apellidos.value;
+                      var telefono=form.telefono.value;
+                      var direccion=form.direccion.value;
+
+                      if (nombre=="")
+                      {
+                        r=0;
+                        alert("El nombre, está vacío...!");
+                        form.nombre.focus;
+                      }
+                      else if (!/^([áéíóúÁÉÍÓÚñÑa-zA-Z\s])*$/.test(nombre))
+                      {
+                        alert("El nombre del propietario no es correcto...!"); 
+                        form.nombre.value="";
+                        r=0;
+                      };
+
+                      if (apellidos=="")
+                      {
+                        r=0;
+                        alert("El campo apellidos, está vacío...!");
+                        form.apellidos.focus;
+                      }
+                      else if (!/^([áéíóúÁÉÍÓÚñÑa-zA-Z\s])*$/.test(apellidos))
+                      {
+                        alert("Los apellidos no son correctos...!"); 
+                        form.apellidos.value="";
+                        r=0;
+                      };
+
+                      if (telefono=="")
+                      {
+                        r=0;
+                        alert("El teléfono, está vacío...!");
+                        form.telefono.focus;
+                      }
+                      else if (!/^([0-9\s])*$/.test(telefono))
+                      {
+                        alert("El teléfono no es correcto...!"); 
+                        form.telefono.value="";
+                        r=0;
+                      };
+
+                      if (direccion=="")
+                      {
+                        r=0;
+                        alert("El campo dirección, está vacío...!");
+                        form.direccion.focus;
+                      }
+                      else if (!/^([áéíóúÁÉÍÓÚñÑa-zA-Z0-9\s])*$/.test(direccion))
+                      {
+                        alert("La dirección no es correcta...!"); 
+                        form.direccion.value="";
+                        r=0;
+                      };
+
+                      // RETORNAR AL ENVÍO
+                      // Si ha hay campos sin cubrir, interrumpimos el envío -return false-
+                      if (r==0) { return false; }
+                      // Si todo está bien, te dispones a enviar el contenido del formulario al script php, -return true-
+                      // Además, alertas al usuario para que no pulse mas veces, aún así, la gente, no se cansa.
+                      else { alert("Cliente guardado correctamente"); return true; }
+                  } 
+            </script>               
+{%endblock%} 

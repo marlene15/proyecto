@@ -15,7 +15,7 @@
                  
                   <br/>
                   <br/>
-                  <form role="form" action="/agregar_lineadecolor" method="post">
+                  <form role="form" action="/agregar_lineadecolor" method="post" onSubmit="return validaNuevo(this);">
                     <input type="hidden" name="descripcion" value="Lapiz Delineador para Ojos" id="descripcion">
                     <div class="panel panel-primary"> 
                         <div class="panel-heading">
@@ -101,5 +101,23 @@
                   {
                         $(boton).parent().parent().remove();
                   }
+                  
+                  function validaNuevo (form) 
+                  {
+                        // VARIABLES
+                        // Variable para controlar si los campos estaban cumplimentados
+                     r=1;
+                     if ($('#tabla >tbody >tr').length == 1)
+                     {
+                      r=0;
+                     };                                     
+
+                      // RETORNAR AL ENVÍO
+                      // Si ha hay campos sin cubrir, interrumpimos el envío -return false-
+                      if (r==0) { alert("No hay registros que agregar"); return false; }
+                      // Si todo está bien, te dispones a enviar el contenido del formulario al script php, -return true-
+                      // Además, alertas al usuario para que no pulse mas veces, aún así, la gente, no se cansa.
+                      else { alert("Venta guardada correctamente"); return true; }
+                  } 
             </script>               
 {%endblock%} 

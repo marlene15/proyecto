@@ -65,7 +65,7 @@
                         <img src="/public/img/Lineadecolor/Mejillas/R3.png"/>
                         <img src="/public/img/Lineadecolor/Mejillas/R4.png"/>
                         <div align="right">
-                              <button type="submit" class="btn btn-primary btn-lg" title="Guardar">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
+                              <button type="submit" class="btn btn-primary btn-lg" title="Guardar" onclick="guardado();">Guardar <span class='glyphicon glyphicon-ok-sign'></span></button>
                               <button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='/index'">Cancelar <span class='glyphicon glyphicon-remove-circle'></span></button>
                         </div>
                   </form>
@@ -99,6 +99,10 @@
                   function elimina_fila(boton)
                   {
                         $(boton).parent().parent().remove();
+                  }
+                  function guardado()
+                  {
+                    alert("Pedido guardado correctamente"); 
                   }
             </script>               
 {%endblock%} 
